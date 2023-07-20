@@ -2,8 +2,8 @@
 
 docker login
 
-username: zhuzhumeng618 292267409@qq.com
-password: Ss&200112
+username: xxx
+password: xxx
 
 ## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>安装</font></p>
 
