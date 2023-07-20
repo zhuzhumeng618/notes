@@ -1,4 +1,4 @@
-# <p style ='background-color:purple;text-align:center;'><font color='white'>介绍</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>介绍</font></p>
 
 ## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>四个工作区域</font></p>
 
@@ -46,7 +46,7 @@ git 不关心文件的两个版本之间的差异，而是关心文件的整体�
 4. <font color='red'>Modified</font>：对 Unmodified 状态的文件内容修改
 5. <font color='blue'>Untracked</font>：对 Unmodified 状态的文件 rm
 
-# <p style ='background-color:purple;text-align:center;'><font color='white'>常用命令</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>常用命令</font></p>
 
 ## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>基本命令</font></p>
 
@@ -282,7 +282,7 @@ git reset origin(本地仓库名) --soft commit_id
 3. 查看 .git 下面的 refs 目录： `cat ./.git/refs/heads/master`
 4. 低版本切换为高版本： `git reset --hard 版本号`
 
-# <p style ='background-color:purple;text-align:center;'><font color='white'>分支</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>分支</font></p>
 
 ## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>分支常用命令</font></p>
 
@@ -330,7 +330,7 @@ git merge 分支名
 
 解决办法：手动修改文件，再次添加到暂存区，再次提交（提交时不带文件名）
 
-# <p style ='background-color:purple;text-align:center;'><font color='white'>团队协作</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>团队协作</font></p>
 
 ## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>团队内协作</font></p>
 
@@ -414,7 +414,7 @@ git clone 远程仓库地址
 4. 在 GitHub 账号中配置： `setting` -> `SSH and GPG keys`
 5. 使用 SSH 地址测试： `git pull (ssh 地址) 分支名` `git push -f (ssh 地址) 分支名`
 
-# <p style ='background-color:purple;text-align:center;'><font color='white'>GitLab 私服</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>GitLab 私服</font></p>
 
 版本：社区版(CE)、企业版(EE)
 

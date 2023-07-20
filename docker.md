@@ -1,4 +1,4 @@
-# <p style ='background-color:purple;text-align:center;'><font color='white'>基本操作</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>基本操作</font></p>
 
 docker login
 
@@ -279,7 +279,7 @@ http://hub.daocloud.io/
 [root@localhost ~]# docker start 容器id
 ```
 
-# <p style ='background-color:purple;text-align:center;'><font color='white'>应用</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>应用</font></p>
 
 ## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>MySQL</font></p>
 
@@ -343,7 +343,7 @@ http://hub.daocloud.io/
 [root@localhost ~]# docker run -v 路径:容器内部的路径 镜像id
 ```
 
-# <p style ='background-color:purple;text-align:center;'><font color='white'>自定义镜像</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>自定义镜像</font></p>
 
 ## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>Dockerfile</font></p>
 
@@ -658,7 +658,7 @@ docker build 最后的点表示指定镜像构建过程中的上下文环境目�
 [root@localhost ~]# docker build -t 镜像名称[:tag] -f Dockerfile 所在目录 .
 ```
 
-# <p style ='background-color:purple;text-align:center;'><font color='white'>Docker compose</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>Docker compose</font></p>
 
 ## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>下载安装 Docker-Compose</font></p>
 
