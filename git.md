@@ -1,4 +1,6 @@
-# 四个工作区域
+# <p style ='background-color:purple;text-align:center;'><font color='white'>介绍</font></p>
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>四个工作区域</font></p>
 
 1. 工作目录：本地写代码的地方。
 2. 暂存区：临时存放所有改动，等待提交。
@@ -7,7 +9,7 @@
 
 ![git-四个工作区域](./images/git/git-四个工作区域.png)
 
-# 四种状态
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>四种状态</font></p>
 
 git 工作流程：
 
@@ -44,7 +46,9 @@ git 不关心文件的两个版本之间的差异，而是关心文件的整体�
 4. <font color='red'>Modified</font>：对 Unmodified 状态的文件内容修改
 5. <font color='blue'>Untracked</font>：对 Unmodified 状态的文件 rm
 
-# 常用命令
+# <p style ='background-color:purple;text-align:center;'><font color='white'>常用命令</font></p>
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>基本命令</font></p>
 
 ```
 git status                          - 查看当前状态
@@ -116,7 +120,7 @@ du -hs
 
 ```
 
-# 配置用户签名
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>配置用户签名</font></p>
 
 全局用户签名<font color='red'>（推荐）</font>：会在用户目录下 .gitconfig git 全局配置文件中追加签名信息。
 
@@ -132,7 +136,7 @@ git config user.name zhuzhumeng
 git config user.email zhuzhumeng@gmail.com
 ```
 
-# 初始化本地仓库
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>初始化本地仓库</font></p>
 
 `git init`
 
@@ -148,7 +152,6 @@ git config user.email zhuzhumeng@gmail.com
 |-- objects/     # git 本地仓库的所有对象（commits, trees, blobs, tags）
 |-- refs/        # 标识你项目里的每个分支指向了哪个提交（commit）。
 ```
-
 
 HEAD 文件：这就是我们常说的HEAD指针，它指向了当前分支。
 
@@ -177,7 +180,7 @@ refs：顾名思义就是引用，refs 下有三个文件夹。
 
 index: 暂存区（stage），是一个二进制文件。
 
-# 查看状态
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>查看状态</font></p>
 
 `git status`
 
@@ -188,7 +191,7 @@ Changes not staged for commit：表示工作区，暂时区都存在的 file（�
 
 Untracked files：表示只在工作区有的 file（文件或文件夹），也就是在暂时区没有该 file。
 
-# 加入暂存区
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>加入暂存区</font></p>
 
 添加一个或多个文件到暂存区：
 
@@ -214,7 +217,13 @@ git add .
 
 `git add -A`：是上面两个功能的合集（git add --all的缩写）
 
-# 提交代码
+取消文件跟踪
+
+```
+git rm -r --cached xxx文件路径名
+```
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>提交代码</font></p>
 
 ```
 git commit -m [message]
@@ -236,9 +245,185 @@ git commit [file1] [file2] -m [message]
 git commit -am [message]
 ```
 
-# 版本切换
+回退本地提交(清除修改的内容)：
+
+HEAD^1 表示上一次提交
+HEAD^2 表示上两次提交
+
+```
+git reset origin(本地仓库名) --hard HEAD^1
+```
+
+commit_id 是提交的 hash 码
+
+```
+git reset origin(本地仓库名) --hard commit_id
+```
+
+回退本地提交(保留修改的内容)：
+
+1 表示上一次提交
+2 表示上两次提交
+
+```
+git reset origin(本地仓库名) --soft HEAD^1
+```
+
+commit_id 是提交的 hash 码
+
+```
+git reset origin(本地仓库名) --soft commit_id
+```
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>版本切换</font></p>
 
 1. 查看版本信息： `git reflog/log`
 2. 切换版本： `git reset --hard 版本号`
 3. 查看 .git 下面的 refs 目录： `cat ./.git/refs/heads/master`
 4. 低版本切换为高版本： `git reset --hard 版本号`
+
+# <p style ='background-color:purple;text-align:center;'><font color='white'>分支</font></p>
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>分支常用命令</font></p>
+
+查看所有分支及当前所在分支：
+
+```
+git branch -v
+```
+
+创建分支：
+
+```
+git branch 新分支名
+```
+
+删除分支：
+
+```
+git branch -d 分支名
+```
+
+修改分支名称：
+
+```
+git branch -m 旧分支名 新分支名
+```
+
+切换分支：
+
+```
+git checkout 分支名
+```
+
+当前分支合并其它分支：
+
+```
+git merge 分支名
+```
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>解决合并分支冲突</font></p>
+
+产生原因：合并分支时，两个的分支在同一个位置都有修改，Git 无法判断保留哪个分支的提交。
+
+会出现：(master|otherBranch) 分支正在进行合并的状态。
+
+解决办法：手动修改文件，再次添加到暂存区，再次提交（提交时不带文件名）
+
+# <p style ='background-color:purple;text-align:center;'><font color='white'>团队协作</font></p>
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>团队内协作</font></p>
+
+![git-团队内协作](./images/git/git-团队内协作.png)
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>团队外协作</font></p>
+
+![git-团队外协作](./images/git/git-团队外协作.png)
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>创建远程库</font></p>
+
+github / gitee 创建远程仓库
+
+查看本地仓库关联远程仓库列表：
+
+```
+git remote -v
+```
+
+创建本地仓库关联远程仓库：
+
+```
+git remote add 别名 远程仓库地址
+```
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>推送远程库</font></p>
+
+```
+git push 别名 分支
+```
+回退远程提交（都会清除远程提交的内容）
+
+--force 和 -f 是一个意思。
+
+保留本地修改的内容：
+
+```
+git reset --soft HEAD^
+git push origin(本地仓库名) master(分支名) --force
+```
+
+或者
+
+```
+git reset --soft commit_id
+git push origin(本地仓库名) master(分支名) -f
+```
+清除本地修改的内容：
+
+--force 和 -f 是一个意思。
+
+```git
+git reset --hard HEAD^
+git push origin(本地仓库名) master(分支名) --force
+```
+
+或者
+
+```
+git reset --hard commit_id
+git push origin(本地仓库名) master(分支名) -f
+```
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>拉取远程库</font></p>
+
+```
+git pull 别名 分支
+```
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>克隆远程库</font></p>
+
+```
+git clone 远程仓库地址
+```
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>免密登录</font></p>
+
+1. 找到 .ssh 文件夹，一般在用户目录。
+2. 生成秘钥： `ssh-keygen -t rsa -C 邮箱`
+3. 复制公钥： `id_rsa.pub`
+4. 在 GitHub 账号中配置： `setting` -> `SSH and GPG keys`
+5. 使用 SSH 地址测试： `git pull (ssh 地址) 分支名` `git push -f (ssh 地址) 分支名`
+
+# <p style ='background-color:purple;text-align:center;'><font color='white'>GitLab 私服</font></p>
+
+版本：社区版(CE)、企业版(EE)
+
+官网： `https://about.gitlab.com/`
+
+## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>安装与初始化</font></p>
+
+基于 docker
+
+下载镜像： `docker pull twang2218/gitlab-ce-zh:11.1.4`
+
+运行容器： `docker run -d -p xxx:xxx --name xxx xxx:xxx`
