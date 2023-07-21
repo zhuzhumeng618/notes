@@ -352,21 +352,252 @@ map 的扩容操作会重新创建一个更大的哈希表，并将旧哈希表�
 
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 介绍 channel</font></p>
 
+go 语言中的 channel 是用于多个 goroutine 之间进行通信的一种机制，通过 channel 可以在多个 goroutine 间安全地传递数据。
 
+channel 是一种类型，可以使用内置的 make() 函数来创建它们，创建 channel 时，需要指定它们可以传输的数据类型。
 
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
+使用 channel 时，可以在 goroutine 之间传递数据，通过它们进行同步（无缓冲）和异步（有缓冲）的操作，在使用 channel 时需要注意以下几点：
+
+1. channel 是引用类型，可以像 slice 和 map 一样传递给函数。
+2. 默认情况下，channel 是无缓冲的，只有当 goroutine 接收端准备好接收数据时，goroutine 发送端发送操作才会成功，如果发送操作没有被接收，goroutine 发送端将会阻塞。
+3. 通过 make() 函数创建带缓冲的 channel 时，可以指定缓冲区的大小，在缓冲区没有被填满前，发送操作不会阻塞。
+4. channel 支持多路复用，使用 select 语句在多个 channel 上进行选择和等待。
+5. channel 可以用于控制 goroutine 的执行，例如通过关闭 channel 来通知 goroutine 退出。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go channel ring buffer</font></p>
+
+channel 会被实现为一个 FIFO 队列，当向 channel 发送数据时，数据会被添加到队列的末尾，当从 channel 接收数据时，数据会被从队列的头部取出。
+
+go 1.3 版本中，新增了一种环形缓冲区(ring buffer)的 channel 实现方式，可以用于提高 channel 的性能，具体来说，当创建一个缓冲区大小为 n 的 channel 时，go 会为其分配一个大小为 n 的环形缓冲区，而不是一个简单的队列。
+
+使用环形缓冲区实现 channel 有以下几个好处：
+
+1. 避免动态内存分配：在缓冲区大小确定的情况下，环形缓冲区可以在创建时一次性分配所需的内存，避免了频繁的动态内存分配和释放操作，从而提高了性能。
+2. 提高缓存命中率：环形缓冲区会将元素放置在连续的内存块中，这样可以提高缓存命中率，从而减少缓存访问延迟，提高了通信的效率。
+3. 支持无锁访问：由于 channel 是在多个 goroutine 之间进行通信的，因此通常会涉及到并发访问的问题，环形缓冲区的视线可以采用无锁算法，从而避免了锁竞争带来的开销，提高了并发访问的效率。
+
+需要注意的是，使用环形缓冲区实现 channel 也有一些限制和注意事项。例如，缓冲区大小必须是 2 的幂次方，否则可能会导致缓冲区溢出或者浪费内存等问题。同时，对于特殊的 channel 操作，如 close、select 和带缓冲区的 channel 等，也需要注意环形缓冲区的使用方式。
+
+ring buffer 是一种循环缓冲区，当达到缓冲区的末尾时，可以从头端重新开始写入数据。这样，可以避免缓冲区溢出的问题，并且在写入和读取数据时保持高效的性能。
+
+在使用 ring buffer 时，需要确保写入数据的速度不会超过读取数据的速度，否则可能会导致 buffer 溢出的问题。因此，在使用 ring buffer 时需要仔细考虑数据流的速度和大小。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 方法和函数的区别</font></p>
+
+方法是一个包含接收者参数的函数，为指定的接收者提供一些行为处理；
+
+函数是一段代码，可被调用并接收参数和返回结果。
+
+与方法不同，函数没有接收者参数，因此它们无法直接修改调用者的状态。函数在 go 语言中是一等公民，可以像任何其他类型的值一样被传递和赋值。函数还可以是匿名的，或者被作为闭包使用，以便在不同的作用域中进行操作。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 指针接收者和值接收者</font></p>
+
+值接收者会在方法调用时会对接收者进行复制，当方法内部存在对接收者的修改操作时，不会改变原有接收者的数据。
+
+指针接收者避免了在方法调用时对接收者复制的操作，从而提高程序的性能，当方法内部存在对接收者的修改操作时，会改变原有接收者的数据。
+
+1. 不想改变接收者数据时用值接收者，需要改变接收者数据时使用指针接收者。
+2. 看自己的编码习惯。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 函数返回局部变量的指针是否安全</font></p>
+
+一般来说，局部变量会在函数返回后被销毁，因此被返回的指针就成为了“无所指”的引用，程序会进入未知状态。
+
+但这在 go 中是安全的，go 编译器将会对每个局部变量进行逃逸分析。如果发现局部变量的作用域超出该函数范围，则不会将内存分配在栈上，而是分配在堆上，因为他们不在栈区，所以即使释放函数，其内容也不会受影响。
+
+编译时可以借助选项 -gcflags=-m，查看变量逃逸的情况。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 函数传参到底是值传递还是引用传递</font></p>
+
+go 只有值传递。
+
+引用类型和引用传递是有区别的。
+
+函数使用指针参数时，指针自身的地址是被复制了一份，这个地址是不同的，但是指针内部存储的变量地址是没有变化的，还是指向原有变量的内存空间。
+
+slice 类型：形参和实际参数内存地址一样，不代表是引用类型；下面进行详细说明 slice 还是值传递，传递的是指针，是一个结构体，他的第一个元素是一个指针类型，这个指针指向的是底层数组的第一个元素。当参数是 slice 类型的时候，fmt.printf 通过 %p 打印的 slice 变量的地址其实就是内部存储数组元素的地址，所以打印出来形参和实参内存地址一样。
+
+因为 slice 作为参数时本质是传递的指针，上面证明了指针也是值传递，所以参数为 slice 也是值传递，指针指向的是同一个变量，函数内对形参的修改，会修改原内容数据。
+
+单纯的从 slice 这个结构体看，我们可以通过 modify 修改存储元素的内容，但是永远修改不了 len 和 cap，因为他们只是一个拷贝，如果要修改，那就要传递 &slice 作为参数才可以。
+
+map 类型：形参和实际参数内存地址不一样，证明是值传递，通过 make 函数创建的 map 变量本质是一个 hmap 类型的指针 *hmap，所以函数内对形参的修改，会修改原内容数据。
+
+channel 类型：形参和实际参数内存地址不一样，证明是值传递，通过 make 函数创建的 chan 变量本质是一个 hchan 类型的指针 *hchan，所以函数内对形参的修改，会修改原内容数据。
+
+struct 类型：形参和实际参数内存地址不一样，证明是值传递。形参不是引用类型或者指针类型，所以函数内对形参的修改，不会修改原内容数据。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go defer 关键字的实现原理</font></p>
+
+defer 能够让我们推迟执行某些函数的调用，推迟到当前函数返回前才执行。
+
+defer、panic、recover 结合，形成了 go 语言风格的异常与捕获机制。
+
+优点：方便开发者使用。
+
+缺点：有性能损耗。
+
+Go1.14 中编译器会将 defer 函数直接插入到函数的尾部，无需链表和栈上参数拷贝，性能大幅提升。把 defer 函数在当前函数内展开并直接调用，这种方式被称为 open coded defer（开放编码延迟）
+
+函数退出前，按照先进后出的顺序，执行 defer 函数。
+
+panic 后的 defer 函数不会被执行（遇到 panic，如果没有捕获错误，函数会立刻终止）
+
+panic 没有被 recover 时，抛出的 panic 到当前 goroutine 最上层函数时，最上层程序直接异常终止。
+
+panic 有被 recover 时，当前 goroutine 最上层函数正常执行。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go make 和 new 的区别</font></p>
+
+make 和 new 是内置函数，不是关键字。
+
+变量初始化两步：变量声明 + 变量内存分配。
+
+var 关键字用来声明变量的，new 和 make 函数主要是用来分配内存的。
+
+var 声明值类型时，系统会默认分配内存空间，并赋值该类型的零值。
+
+var 声明引用类型和指针类型时，系统不会分配内存空间，默认就是 nil，如果直接进行使用，系统会发生错误，必须进行内存分配后才能使用。
+
+new 和 make 两个内置函数，主要用来分配内存空间，有了内存，变量就能使用了。
+
+使用场景的区别：
+
+make 只能用来分配及初始化 slice、map、chan 的数据。
+
+new 可以分配任意类型的数据，并且置零。
+
+sli 也可以使用 new 进行内存分配，但是长度和容量都为 0，只能通过内置的 append 函数进行使用。
+
+map 也可以使用 new 进行内存分配，但不能使用。
+
+返回值的区别：
+
+make 函数原型如下：返回的是 slice、map、chan 类型本身。
+
+这 3 中类型就是引用类型，没有必要返回他们的指针。
+
+new 函数返回一个指向该类型内存地址的指针。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go slice 的底层实现原理</font></p>
+
+切片是基于数组实现的，底层是数组，可以理解为对底层数组的抽象。
+
+runtime/slice.go
+
+```
+type slice struct {
+    array unsafe.Pointer
+    len   int
+    cap   int
+}
+```
+
+slice 占用 24 个字节 
+
+array：指向底层数组的指针，占用 8 个字节。
+
+len：slice 的长度，占用 8 个字节。
+
+cap：slice 的容量，cap 总是大于等于 len，占用 8 个字节。
+
+4 种初始化方式。
+
+var、:=、make、arr\[0:3]
+
+通过 go tool compile 得到汇编代码。
+
+初始化 slice 调用的是 runtime.makeslice，makeslice 函数的工作主要就是计算 slice 所需内存大小，然后调用 mallocgc 进行内存的分配。
+
+所需内存大小 = 切片中元素大小 * 切片的容量
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go array 和 slice 区别</font></p>
+
+长度不同：
+
+数组初始化必须指定数组长度，并且长度固定不可变。
+
+切片舒适化无需指定切片长度，可以追加元素，在追加时，底层会根据扩容策略进行自动扩容。
+
+函数传参方式不同：
+
+数组是值类型，将一个数组赋值给另一个数组时，传递的是一份深拷贝，函数传参操作都会复制整个数组数据，会占用额外的内存，函数内对数组元素值的修改，不会修改原数组内容。
+
+切片是引用类型，将一个切片复制给另一个切片时，传递的是一份浅拷贝，函数传参操作不会复制整个切片，只会复制 len 和 cap，底层共用同一个底层数组数据，不会占用额外的内容，函数内对数组元素值的修改，会修改原数组内容。
+
+计算长度方式不同：
+
+数组需要遍历计算数组长度，时间复杂度为 O(n)
+
+切片底层包含 len 字段，可以通过 len() 计算切片长度，时间复杂度为 O(1)
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go slice 深拷贝和浅拷贝</font></p>
+
+深拷贝：拷贝的是数据本身，创造一个新对象，新创建的对象与源对象不共享内存，新创建的对象在内存中开辟一个新的内存地址，新对象值修改时不会影响原对象值。
+
+实现深拷贝方式：
+
+1. 使用内置函数 copy(dst,src []Type)；
+2. 遍历 append 赋值。
+
+浅拷贝：拷贝的是数据地址，只复制指向的对象的指针，此时新对象和老对象指向的内存地址是一样的，新对象值修改时老对象也会变化。
+
+实现浅拷贝方式：引用类型的变量，默认赋值操作就是浅拷贝。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go slice 扩容机制</font></p>
+
+扩容会发生在 slice append 时候，当 slice 的 cap 不足以容纳新元素，就会进行扩容，扩容规则如下：
+
+1. 如果新申请的容量比原有容量的两倍大，那么扩容后容量大小为新申请的容量；
+2. 如果原有 slice 长度小于 1024，那么每次就扩容为原来的 2 倍；
+3. 如果原有 slice 长度大于等于 1024，那么每次扩容就扩为原来的 1.25 倍。
+
+新版本为 256。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go slice 为什么不是线程安全的</font></p>
+
+线程安全定义：
+
+1. 多个线程访问同一个对象时，调用这个对象的行为都可以获得正确的结果，那么这个对象就是线程安全的。
+2. 若有多个线程同时执行写操作，一般都需要考虑线程同步，否则的话就可能影响线程安全。
+
+go 实现线程安全常用的几种方式：
+
+1. 互斥锁
+2. 读写锁
+3. 原子操作
+4. sync.once
+5. sync.atomic
+6. channel
+
+slice 底层结构并没有使用加锁等方式，不支持并发读写，所以并不是线程安全的，使用多个 goroutine 对类型为 slice 的变量进行操作，每次输出的值大概率都不会一样，与预期值不一致; slice 在并发执行中不会报错，但是数据会丢失。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go map 底层实现原理</font></p>
+
+map 是一个指针，占用 8 个字节，指向 hmap 结构体。
+
+源码包 `runtime/map.go` 定义了 hmap 的数据结构：
+
+hmap 包含若干个结构为 bmap 的数组，每个 bmap 底层都采用链表结构，bmap 通常叫其 bucket(桶)
+
+hmap 结构体：
+
+```
+// A header for a Go map.
+type hmap struct {
+    count      int            // 代表哈希表中的元素个数，调用 len(map) 时，返回的就是该字段值。
+    flags      uint8          // 状态标志（是否处于正在写入的状态等）
+    B          uint8          // buckets（桶）的对数，如果 B=5，则 buckets 数组的长度 = 2^B =32，意味着有32个桶
+    noverflow  uint16         // 溢出桶的数量
+    hash0      uint32         // 生成 hash 的随机数种子
+    buckets    unsafe.Pointer // 指向 buckets 数组的指针，数组大小为 2^B，如果元素个数为 0，它为 nil。
+    oldbuckets unsafe.Pointer // 如果发生扩容，oldbuckets 是指向老的 buckets 数组的指针，老的 buckets 数组大小是新的 buckets 的 1/2；非扩容状态下，它为 nil。
+    nevacuate  uintptr        // 表示扩容进度，小于此地址的 buckets 代表已搬迁完成。
+    extra *mapextra           // 存储溢出桶，这个字段是为了优化 GC 扫描而设计的，下面详细介绍
+ }
+
+```
+
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
