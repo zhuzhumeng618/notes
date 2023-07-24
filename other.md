@@ -598,76 +598,728 @@ type hmap struct {
 
 ```
 
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'></font></p>
+![map-底层存储原理](./images/other/map-底层存储原理.png)
 
+bmap 结构体
+
+一个桶(bmap)中最多装 8 个 key，key 会落入到同一个桶中，因为经过哈希计算后，哈希结果的低 B 位是相同的。在桶内会根据 key 计算出来的 hash 值的高 8 位来决定 key 到底落入到桶内的哪个位置(一个 bucket 最多 8 个位置)
+
+```
+// A bucket for a Go map.
+type bmap struct {
+    tophash [bucketCnt]uint8        
+    // len为8的数组
+    // 用来快速定位 key 是否在这个 bmap 中
+    // 一个桶最多 8 个槽位，如果key所在的 tophash 值在 tophash 中，则代表该 key 在这个桶中
+}
+
+```
+
+上面的 bmap 是静态的，在编译过程中 runtime.bmap 会拓展成以下结构体。
+
+```
+type bmap struct{
+    tophash [8]uint8
+    keys [8]keytype 
+    // keytype 由编译器编译时候确定
+    values [8]elemtype 
+    // elemtype 由编译器编译时候确定
+    overflow uintptr 
+    // overflow 指向下一个 bmap，overflow 是 uintptr 而不是 *bmap 类型，保证 bmap 完全不含指针，是为了减少 gc，溢出桶存储到 extra 字段中
+}
+
+```
+
+tophash 就是用于实现快速定位 key 的位置，在实现过程中会使用 key 的 hash 值的高 8 位作为 tophash 值，存放在 bmap 的 tophash 字段中。
+
+tophash 字段不仅存储 key 哈希值的高 8 位，还会存储一些状态值，用来表明当前桶单元状态，这些状态值都是小于 minTopHash 的。
+
+为了避免 key 哈希值的高 8 位值和这些状态值相等，产生混淆，所以当 key 哈希值高 8 位若小于 minTopHash 时候，自动将**其值**加上 minTopHash 作为该 key 的 topHash。
+
+桶单元的状态值如下：
+
+```
+const emptyRest      = 0 // 表明此桶单元为空，且更高索引的单元也是空
+const emptyOne       = 1 // 表明此桶单元为空
+const evacuatedX     = 2 // 用于表示扩容迁移到新桶前半段区间
+const evacuatedY     = 3 // 用于表示扩容迁移到新桶后半段区间
+const evacuatedEmpty = 4 // 用于表示此单元已迁移
+const minTopHash     = 5 // key 的 tophash 值与桶状态值分割线值，小于此值的一定代表着桶单元的状态，大于此值的一定是 key 对应的 tophash 值
+
+func tophash(hash uintptr) uint8 {
+    top := uint8(hash >> (goarch.PtrSize*8 - 8))
+    if top < minTopHash {
+        top += minTopHash
+    }
+    return top
+}
+
+```
+
+mapextra 结构体
+
+当 map 的 key 和 value 都不是指针类型时，bmap 将完全不包含指针，那么 gc 时候就不用扫描 bmap。
+
+bmap 指向溢出桶的字段 overflow 是 uintptr 类型，为了防止这些 overflow 桶被 gc 掉，所以需要 mapextra.overflow 将它保存起来。
+
+如果 bmap 的 overflow 是 *bmap 类型，那么 gc 扫描的就是一个个拉链表，效率明显不如直接扫描一段内存(hmap.mapextra.overflow)
+
+bmap 内存数据结构如下：
+
+key 和 value 是各自放在一起的，并不是 key/value/key/value... 这样的形式。
+
+当 key 和 value 的类型不一样的时候，key 和 value 占用字节大小不一样，使用 key/value 这种形式可能会因为内存对齐导致内存空间的浪费，所以 go 采用 key 和 value 分开存储的设计，更节省内存空间。
+
+![map-buckets 内存结构](./images/other/map-buckets%20内存结构.png)
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go map 遍历为什么是无序的</font></p>
+
+使用 range 多次遍历 map 时输出的 key 和 value 的顺序可能不同。(go 设计者有意为之)
+
+提示开发者们，go 底层实现并不保证 map 遍历顺序稳定，请大家不要依赖 range 遍历结果顺序。
+
+主要原因：
+
+1. map 遍历时，并不是从固定的 0 号桶开始遍历，每次遍历都会从一个随机值序号的桶，再从其中随机的 cell（单元格） 开始遍历。
+2. map 遍历时，是按需遍历 bucket，同时按需遍历 bucket 中和其 overflow bucket 中的 cell，但是在 map 进行扩容后，会发生 key 的搬迁，这造成原来落在一个 bucket 中的 key 在搬迁后有可能落入其他 bucket 中，从这个角度看，遍历 map 的结果就不可能是按照原来的顺序了。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go map 为什么是非线程安全的</font></p>
+
+map 默认是并发不安全的，同时对 map 进行并发读写时，程序会 panic。
+
+go 团队长时间讨论后认为 map 更应该适配典型使用场景（不需要从多个 goroutine 中进行安全访问），而不是为了小部分情况（并发访问），导致大部分程序付出加锁代价（性能），决定了不支持。
+
+两个协程同时对 map 进行读和写会发生 panic 错误（concurrent map writes）
+
+实现 map 线程安全方式：
+
+1. 读写锁 map + sync.RWMutex
+2. 使用 sync.Map
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go map 如何查找</font></p>
+
+go 读取 map 两种方式：
+
+1. value, ok，ok == false，value 返回对应类型的零值。
+2. value
+
+map 的查找通过生成汇编码可以知道，根据 key 的不同类型/返回参数，编译器会将查找函数用更具体的函数替换，以优化效率：
+
+<table>
+<thead>
+<tr><th align="left">key 类型</th><th align="left">查找</th></tr>
+</thead>
+
+<tbody>
+<tr><td align="left">uint32</td><td align="left">mapaccess1_fast32(t <em>maptype, h</em> hmap, key uint32) unsafe.Pointer</td></tr>
+<tr><td align="left">uint32</td><td align="left">mapaccess2_fast32(t <em>maptype, h</em> hmap, key uint32) (unsafe.Pointer, bool)</td></tr>
+<tr><td align="left">uint64</td><td align="left">mapaccess1_fast64(t <em>maptype, h</em> hmap, key uint64) unsafe.Pointer</td></tr>
+<tr><td align="left">uint64</td><td align="left">mapaccess2_fast64(t <em>maptype, h</em> hmap, key uint64) (unsafe.Pointer, bool)</td></tr>
+<tr><td align="left">string</td><td align="left">mapaccess1_faststr(t <em>maptype, h</em> hmap, ky string) unsafe.Pointer</td></tr>
+<tr><td align="left">string</td><td align="left">mapaccess2_faststr(t <em>maptype, h</em> hmap, ky string) (unsafe.Pointer, bool)</td></tr>
+</tbody>
+</table>
+
+查找流程：
+
+开始 -> 写保护检测 -> 计算 hash 值 -> 找到 hash 对应的 bucket -> bucket 是否正在扩容
+
+next -> bucket 没有扩容 -> 遍历 bucket （包含溢出桶）的 key -> 是否找到 key
+
+next -> -> 没有找到 key -> 返回空指针 -> 结束
+
+next -> -> 成功找到 key -> 返回 key 对应的指针 -> 结束
+
+next -> bucket 正在扩容 -> bucket 是否已完成扩容
+
+next -> -> 已完成扩容 -> 遍历 bucket （包含溢出桶）的 key -> 是否找到 key
+
+next -> -> 未完成扩容 -> 从旧的 bucket 中查询 -> 遍历 bucket （包含溢出桶）的 key -> 是否找到 key
+
+next -> -> -> 没有找到 key -> 返回空指针 -> 结束
+
+next -> -> -> 成功找到 key -> 返回 key 对应的指针 -> 结束
+
+![map-map 查找](./images/other/map-map%20查找.png)
+
+1. 写保护检测：函数首先会检查 map 的标志位 flags，如果 flags == 1，说明有其他协程正在执行“写”操作，进而导致程序 panic，这也说明了 map 不是线程安全的。
+2. 计算 hash 值：key 经过哈希函数计算后，得到的哈希值如下（主流 64 位机下共 64 个 bit 位），不同类型的 key 会有不同的 hash 值。
+
+```
+hash := t.hasher(key, uintptr(h.hash0))
+10010111 | 000011110110110010001111001010100010010110010101010 │ 01010
+```
+
+3. 找到 hash 对应的 bucket：bucket 定位根据哈希值的低 B 个 bit 位，来定位 key 所存放的 bucket。如果当前正在扩容中，并且定位到的旧 bucket 数据还未完成迁移，则使用旧的 bucket（扩容前的 bucket）
+
+```
+hash := t.hasher(key, uintptr(h.hash0))
+// 桶的个数m-1，即 1<<B-1,B=5时，则有0~31号桶
+m := bucketMask(h.B)
+// 计算哈希值对应的bucket
+// t.bucketsize为一个bmap的大小，通过对哈希值和桶个数取模得到桶编号，通过对桶编号和buckets起始地址进行运算，获取哈希值对应的bucket
+b := (*bmap)(add(h.buckets, (hash&m)*uintptr(t.bucketsize)))
+// 是否在扩容
+if c := h.oldbuckets; c != nil {
+  // 桶个数已经发生增长一倍，则旧bucket的桶个数为当前桶个数的一半
+    if !h.sameSizeGrow() {
+        // There used to be half as many buckets; mask down one more power of two.
+        m >>= 1
+    }
+    // 计算哈希值对应的旧bucket
+    oldb := (*bmap)(add(c, (hash&m)*uintptr(t.bucketsize)))
+    // 如果旧bucket的数据没有完成迁移，则使用旧bucket查找
+    if !evacuated(oldb) {
+        b = oldb
+    }
+}
+
+```
+
+4. 遍历 bucket （包含溢出桶）的 key：tophash 值定位，哈希值的高 8 个 bit 位，用来快速判断 key 是否已在当前 bucket 中（如果不在的话，需要去 bucket 的 overflow 中查找），用步骤2中的hash值，得到高8个bit位，也就是 10010111 ，转化为十进制，也就是 151
+
+```
+top := tophash(hash)
+func tophash(hash uintptr) uint8 {
+    top := uint8(hash >> (goarch.PtrSize*8 - 8))
+    if top < minTopHash {
+        top += minTopHash
+    }
+    return top
+}
+
+```
+
+上面函数中hash是64位的，sys.PtrSize值是8，所以<code>top := uint8(hash &gt;&gt; (sys.PtrSize*8 - 8)) 等效<code>top = uint8(hash &gt;&gt; 56) ，最后top取出来的值就是hash的高8位值。
+
+在 bucket 及 bucket 的overflow中寻找tophash 值（HOB hash）为 151* 的 槽位，即为key所在位置，找到了空槽位或者 2 号槽位，这样整个查找过程就结束了，其中找到空槽位代表没找到。
+
+```
+for ; b != nil; b = b.overflow(t) {
+        for i := uintptr(0); i < bucketCnt; i++ {
+            if b.tophash[i] != top {
+              // 未被使用的槽位，插入
+                if b.tophash[i] == emptyRest {
+                    break bucketloop
+                }
+                continue
+            }
+            // 找到tophash值对应的的key
+            k := add(unsafe.Pointer(b), dataOffset+i*uintptr(t.keysize))
+            if t.key.equal(key, k) {
+                e := add(unsafe.Pointer(b), dataOffset+bucketCnt*uintptr(t.keysize)+i*uintptr(t.elemsize))
+                return e
+            }
+        }
+    }
+
+```
+
+![map-map key 定位](./images/other/map-map%20key%20定位.png)
+
+5. 返回 key 对应的指针：如果通过上面的步骤找到了key对应的槽位下标 i，我们再详细分析下key/value值是如何获取的
+
+```
+// keys的偏移量
+dataOffset = unsafe.Offsetof(struct{
+  b bmap
+  v int64
+}{}.v)
+
+// 一个bucket的元素个数
+bucketCnt = 8
+
+// key 定位公式
+k :=add(unsafe.Pointer(b),dataOffset+i*uintptr(t.keysize))
+
+// value 定位公式
+v:= add(unsafe.Pointer(b),dataOffset+bucketCnt*uintptr(t.keysize)+i*uintptr(t.valuesize))
+```
+
+bucket 里 keys 的起始地址就是 unsafe.Pointer(b)+dataOffset
+
+第 i 个下标 key 的地址就要在此基础上跨过 i 个 key 的大小；
+
+而我们又知道，value 的地址是在所有 key 之后，因此第 i 个下标 value 的地址还需要加上所有 key 的偏移。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go map 冲突解决方式</font></p>
+
+常见的解决 hash 冲突的两种解决方案：链地址法、开放寻址法。
+
+链地址法：当哈希冲突发生时，创建新单元，并将新单元添加到冲突单元所在链表的尾部。
+
+开放寻址法：
+
+当哈希冲突时，从发生冲突的那个单元起，按照一定得次序，从哈希表中寻找一个空闲的单元，然后把发生冲突的元素存入到该单元。**开放寻址发需要的表长度要大于等于所需存放的元素数量**
+
+开放寻址法有多种实现方式：线性探测法、平方探测法、随机探测法和双重哈希法。
+
+线性探测法：
+
+设 Hash(key) 表示关键字 key 的哈希值， 表示哈希表的槽位数（哈希表的大小）。
+
+线性探测法则可以表示为：
+
+如果 Hash(x) % M 已经有数据，则尝试 (Hash(x) + 1) % M
+
+如果 Hash(x + 1) % M 也有数据了，则尝试 (Hash(x) + 2) % M
+
+如果 Hash(x + 2) % M 也有数据了，则尝试 (Hash(x) + 3) % M
+
+**链地址法与开放寻址法对比：**
+
+链地址法：基于数组+链表进行存储，链表节点可以在需要时创建，不必像开放寻址法那样事先申请好足够内存，因此链地址法对于内存的利用率会比开放寻址法高。链地址法对装载因子的容忍度会更高，并且适合存储大对象、大数据量的哈希表，而且相较于开放寻址法，链地址法更加灵活，支持更多的优化策略，比如可采用红黑树代替链表，但是链地址法需要额外的空间来存储指针。
+
+开放寻址法：只有数组一种数据结构就可完成存储，继承了数组的优点，对 CPU 缓存友好，易于序列化操作，但是它对于内存的利用率不如链地址法，且发生冲突代价更高，当数据量明确、装载因子小，适合采用开放寻址法。
+
+当发生哈希冲突时，Python 中 dict 采用的开放寻址法，Java 的 HashMap 采用的是链地址法，go map 采用的是链地址法解决冲突，具体就是插入 key 到 map 中时，当 key 定位的桶填满 8 个元素后（这里的单元就是桶，不是元素），将会创建一个溢出桶，并将溢出桶插入到当前桶所在的链表尾部。
+
+```
+if inserti == nil {
+        // all current buckets are full, allocate a new one.
+        newb := h.newoverflow(t, b)
+        // 创建一个新的溢出桶
+        inserti = &newb.tophash[0]
+        insertk = add(unsafe.Pointer(newb), dataOffset)
+        elem = add(insertk, bucketCnt*uintptr(t.keysize))
+}
+
+```
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go map 负载因子为 6.5</font></p>
+
+负载因子（load factor），用于衡量当前哈希表中空间占用率的核心指标，也就是每个 bucket 桶存储的平均元素个数。
+
+`负载因子 = 哈希表存储的元素个数/桶个数`
+
+另外负载因子与扩容、迁移等重新散列（rehash）行为有直接关系：
+
+1. 在程序运行时，会不断地进行插入、删除等，会导致 bucket 不均，内存利用率低，需要迁移。
+2. 在程序运行时，出现负载因子过大，需要做扩容，解决 bucket 过大的问题。
+
+负载因子是哈希表中的一个重要指标，在各种版本的哈希表实现中都有类似的东西，主要目的是为了平衡 buckets 的存储空间大小和查找元素时的性能高低。
+
+为什么是 6.5：为什么 Go 语言中哈希表的负载因子是 6.5，为什么不是 8 ，也不是 1。这里面有可靠的数据支撑吗？
+
+go 官方测试报告：
+
+<table class="table table-bordered">
+<thead>
+<tr><th align="left">loadFactor</th><th align="left">%overflow</th><th align="left">bytes/entry</th><th align="left">hitprobe</th><th align="left">missprobe</th></tr>
+</thead>
+<tbody>
+<tr><td align="left">4.00</td><td align="left">2.13</td><td align="left">20.77</td><td align="left">3.00</td><td align="left">4.00</td></tr>
+<tr><td align="left">4.50</td><td align="left">4.05</td><td align="left">17.30</td><td align="left">3.25</td><td align="left">4.50</td></tr>
+<tr><td align="left">5.00</td><td align="left">6.85</td><td align="left">14.77</td><td align="left">3.50</td><td align="left">5.00</td></tr>
+<tr><td align="left">5.50</td><td align="left">10.55</td><td align="left">12.94</td><td align="left">3.75</td><td align="left">5.50</td></tr>
+<tr><td align="left">6.00</td><td align="left">15.27</td><td align="left">11.67</td><td align="left">4.00</td><td align="left">6.00</td></tr>
+<tr><td align="left">6.50</td><td align="left">20.90</td><td align="left">10.79</td><td align="left">4.25</td><td align="left">6.50</td></tr>
+<tr><td align="left">7.00</td><td align="left">27.14</td><td align="left">10.15</td><td align="left">4.50</td><td align="left">7.00</td></tr>
+<tr><td align="left">7.50</td><td align="left">34.03</td><td align="left">9.73</td><td align="left">4.75</td><td align="left">7.50</td></tr>
+<tr><td align="left">8.00</td><td align="left">41.10</td><td align="left">9.40</td><td align="left">5.00</td><td align="left">8.00</td></tr>
+</tbody>
+</table>
+
+1. loadFactor：负载因子，也有叫装载因子。</li>
+2. %overflow：溢出率，有溢出 bukcet 的百分比。
+3. bytes/entry：平均每对 key/value 的开销字节数。
+4. hitprobe：查找一个存在的 key 时，要查找的平均个数。
+5. missprobe：查找一个不存在的 key 时，要查找的平均个数。
+
+Go 官方发现：装载因子越大，填入的元素越多，空间利用率就越高，但发生哈希冲突的几率就变大。反之，装载因子越小，填入的元素越少，冲突发生的几率减小，但空间浪费也会变得更多，而且还会提高扩容操作的次数。
+
+根据这份测试结果和讨论，Go 官方取了一个相对适中的值，把 Go 中的 map 的负载因子硬编码为 6.5，这就是 6.5 的选择缘由。
+
+这意味着在 Go 语言中，当 map存储的元素个数大于或等于 6.5 * 桶个数 时，就会触发扩容行为。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go map 如何扩容</font></p>
+
+扩容时机：向 map 插入新 key 时，会进行条件检测，符合 2 个条件，就会触发扩容：
+
+```
+if !h.growing() && (overLoadFactor(h.count+1, h.B) || tooManyOverflowBuckets(h.noverflow, h.B)) {
+  hashGrow(t, h)
+  goto again // Growing the table invalidates everything, so try again
+}
+
+// 判断是否在扩容
+func (h *hmap) growing() bool {
+    return h.oldbuckets != nil
+}
+
+```
+
+扩容条件 1：超过负载，map 元素个数 > 6.5 * 桶个数。
+
+```
+func overLoadFactor(count int, B uint8) bool {
+   return count > bucketCnt && uintptr(count) > loadFactor*bucketShift(B)
+}
+
+其中 
+
+bucketCnt = 8，一个桶可以装的最大元素个数
+loadFactor = 6.5，负载因子，平均每个桶的元素个数
+bucketShift(B): 桶的个数
+
+```
+
+扩容条件 2：溢出桶太多
+
+当桶总数 < 2 ^ 15 时，如果溢出桶总数 >= 桶总数，则认为溢出桶过多。
+
+当桶总数 >= 2 ^ 15 时，直接与 2 ^ 15 比较，当溢出桶总数 >= 2 ^ 15 时，即认为溢出桶太多了。
+
+```
+func tooManyOverflowBuckets(noverflow uint16, B uint8) bool {
+    // If the threshold is too low, we do extraneous work.
+    // If the threshold is too high, maps that grow and shrink can hold on to lots of unused memory.
+    // "too many" means (approximately) as many overflow buckets as regular buckets.
+    // See incrnoverflow for more details.
+    if B > 15 {
+        B = 15
+    }
+    // The compiler does not see here that B < 16; mask B to generate shorter shift code.
+    return noverflow >= uint16(1)<<(B&15)
+}
+
+```
+
+对于条件2，其实算是对条件1的补充。因为在负载因子比较小的情况下，有可能 map 的查找和插入效率也很低，而第 1 点识别不出来这种情况。
+
+表面现象就是负载因子比较小，即 map 里元素总数少，但是桶数量多（真实分配的桶数量多，包括大量的溢出桶）。比如不断的增删，这样会造成overflow的bucket数量增多，但负载因子又不高，达不到第 1 点的临界值，就不能触发扩容来缓解这种情况。这样会造成桶的使用率不高，值存储得比较稀疏，查找插入效率会变得非常低，因此有了第 2 扩容条件。
+
+扩容机制：
+
+1. 双倍扩容：针对条件 1，新建一个 buckets 数组，新的 buckets 大小是原来的 2 倍，然后旧 bucket 数据搬迁到新的 buckets。
+2. 等量扩容：针对条件 2，并不扩大容量，buckets 数量维持不变，重新做一遍类似双倍扩容的搬迁动作，把松散的键值对重新排列一次，使得同一个 bucket 中的 key 排列地更紧密，节省空间，提高 bucket 利用率，进而保证更快的存取。
+
+上面说的 hashGrow() 函数实际上并没有真正地“搬迁”，它只是分配好了新的 buckets，并将老的 buckets 挂到了 oldbuckets 字段上。真正搬迁 buckets 的动作在 growWork() 函数中，而调用 growWork() 函数的动作是在 mapassign 和 mapdelete 函数中。也就是插入或修改、删除 key 的时候，都会尝试进行搬迁 buckets 的工作。先检查 oldbuckets 是否搬迁完毕，具体来说就是检查 oldbuckets 是否为 nil
+
+```
+func hashGrow(t *maptype, h *hmap) {
+    // 如果达到条件 1，那么将B值加1，相当于是原来的2倍
+    // 否则对应条件 2，进行等量扩容，所以 B 不变
+      bigger := uint8(1)
+      if !overLoadFactor(h.count+1, h.B) {
+          bigger = 0
+          h.flags |= sameSizeGrow
+      }
+    // 记录老的buckets
+      oldbuckets := h.buckets
+    // 申请新的buckets空间
+      newbuckets, nextOverflow := makeBucketArray(t, h.B+bigger, nil)
+    // 注意&^ 运算符，这块代码的逻辑是转移标志位
+      flags := h.flags &^ (iterator | oldIterator)
+      if h.flags&iterator != 0 {
+          flags |= oldIterator
+      }
+      // 提交grow (atomic wrt gc)
+      h.B += bigger
+      h.flags = flags
+      h.oldbuckets = oldbuckets
+      h.buckets = newbuckets
+    // 搬迁进度为0
+      h.nevacuate = 0
+    // overflow buckets 数为0
+      h.noverflow = 
+    // 如果发现hmap是通过extra字段 来存储 overflow buckets时
+      if h.extra != nil && h.extra.overflow != nil {
+          if h.extra.oldoverflow != nil {
+              throw("oldoverflow is not nil")
+          }
+          h.extra.oldoverflow = h.extra.overflow
+          h.extra.overflow = nil
+      }
+      if nextOverflow != nil {
+          if h.extra == nil {
+              h.extra = new(mapextra)
+          }
+          h.extra.nextOverflow = nextOverflow
+      }
+}
+
+```
+
+由于 map 扩容需要将原有的 key/value 重新搬迁到新的内存地址，如果map存储了数以亿计的key-value，一次性搬迁将会造成比较大的延时，因此 Go map 的扩容采取了一种称为 **“渐进式”** 的方式，原有的 key 并不会一次性搬迁完毕，每次最多只会搬迁 2 个 bucket。
+
+```
+func growWork(t *maptype, h *hmap, bucket uintptr) {
+    // 为了确认搬迁的 bucket 是我们正在使用的 bucket
+    // 即如果当前key映射到老的bucket1，那么就搬迁该bucket1。
+    evacuate(t, h, bucket&h.oldbucketmask())
+    // 如果还未完成扩容工作，则再搬迁一个bucket。
+    if h.growing() {
+        evacuate(t, h, h.nevacuate)
+    }
+}
+
+```
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go map 和 go sync.Map 性能对比</font></p>
+
+sync.Map 支持并发读写，采取了“空间换时间”的机制，冗余了两个数据结构，分别是 read 和 dirty
+
+```
+type Map struct {
+   mu Mutex
+   read atomic.Value // readOnly
+   dirty map[interface{}]*entry
+   misses int
+}
+
+```
+
+对比原始 map：和原始map+RWLock的实现并发的方式相比，减少了加锁对性能的影响。它做了一些优化：可以无锁访问read map，而且会优先操作read map，倘若只操作read map就可以满足要求，那就不用去操作write map(dirty)，所以在某些特定场景中它发生锁竞争的频率会远远小于map+RWLock的实现方式。
+
+优点：适合读多写少的场景。
+
+缺点：写多的场景，会导致 read map 缓存失效，需要加锁，冲突变多，性能急剧下降。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go channel 底层实现原理</font></p>
+
+channel 是一个队列，遵循先进先出的原则，负责多个协程之间的通信。
+
+go 提倡不要通过共享内存实现通信，要通过通信来实现共享内存，CSP 并发模型就是通过 goroutine 和 channel 来实现的。
+
+使用的场景：
+
+1. 停止信号监听。
+2. 生产者和消费者解耦。
+3. 定时任务。
+4. 控制并发数。
+
+底层数据结构：
+
+通过 var 声明、make 函数创建的 channel 变量是一个存储在函数栈帧上的指针，占用 8 个字节，指向堆上的 hchan 结构体。
+
+源码包中 src/runtime/chan.go 定义了 hchan 的数据结构。
+
+![channel-channel 底层原理](./images/other/channel-channel%20底层原理.png)
+
+hchan 结构体：
+
+```
+type hchan struct {
+    closed   uint32   // channel是否关闭的标志
+    elemtype *_type   // channel中的元素类型
+    
+    // channel分为无缓冲和有缓冲两种。
+    // 对于有缓冲的channel存储数据，使用了 ring buffer（环形缓冲区) 来缓存写入的数据，本质是循环数组
+    // 为啥是循环数组？普通数组不行吗，普通数组容量固定更适合指定的空间，弹出元素时，普通数组需要全部都前移
+    // 当下标超过数组容量后会回到第一个位置，所以需要有两个字段记录当前读和写的下标位置
+    buf      unsafe.Pointer // 指向底层循环数组的指针（环形缓冲区）
+    qcount   uint           // 循环数组中的元素数量
+    dataqsiz uint           // 循环数组的长度
+    elemsize uint16                 // 元素的大小
+    sendx    uint           // 下一次写下标的位置
+    recvx    uint           // 下一次读下标的位置
+    
+    // 尝试读取channel或向channel写入数据而被阻塞的goroutine
+    recvq    waitq  // 读等待队列
+    sendq    waitq  // 写等待队列
+    
+    lock mutex //互斥锁，保证读写channel时不存在并发竞争问题
+}
+
+```
+
+等待队列：双向链表，包含一个头节点和一个尾节点。
+
+每个节点是一个 sudog 结构体变量，记录哪个协程在等待，等待的是哪个 channel，等待发送/接收的数据在哪里。
+
+```
+type waitq struct {
+   first *sudog
+   last  *sudog
+}
+
+type sudog struct {
+    g *g
+    next *sudog
+    prev *sudog
+    elem unsafe.Pointer 
+    c        *hchan 
+    ...
+}
+
+```
+
+操作：
+
+创建：使用 make(chan T，cap) 来创建 channel，make 语法会在编译时，转换为 makechan64 和 makechan
+
+```
+func makechan64(t *chantype, size int64) *hchan {
+    if int64(int(size)) != size {
+        panic(plainError("makechan: size out of range"))
+    }
+
+    return makechan(t, int(size))
+}
+
+```
+
+创建时会做出一些检查：
+
+1. 元素大小不能超过 64K
+2. 元素的对齐大小不能超过 maxAlign 也就是 8 字节。
+3. 计算出来的内存是否超过限制
+
+创建时的策略：
+
+1. 无缓冲 channel，会直接给 hchan 分配内存。
+2. 有缓冲 channel，元素不包含指针，为 hchan 和底层数组分配一段连续的地址。
+3. 有缓冲 channel，元素包含指针，为 hchan 和底层数组分别分配地址。
+
+发送：发送操作，编译时转换为 runtime.chansend 函数
+
+`func chansend(c *hchan, ep unsafe.Pointer, block bool, callerpc uintptr) bool`
+
+阻塞式：调用 chansend 函数，并且 block = true
+
+`ch <- 10`
+
+非阻塞式：调用 chansend 函数，并且 block = false
+
+```
+select {
+    case ch <- 10:
+    ...
+
+  default
+}
+
+```
+
+向 channel 中发送数据时大概分为两大块：检查和数据发送，数据发送流程如下：
+
+1. 如果 channel 的读等待队列存在接收者 goroutine：将数据直接发送给第一个等待的 goroutine，唤醒接收的 goroutine
+2. 如果 channel 的读等待队列不存在接收者 goroutine
+   - 如果循环数组 buf 未满，将会把数据发送到循环数组 buf 的队尾。
+   - 如果循环数组 buf 已满，这个时候就会走阻塞发送的流程，将当前 goroutine 加入写等待队列，并挂起等待唤醒。
+
+接收：
+
+发送操作，编译时转换为 runtime.chanrecv 函数
+
+`func chanrecv(c *hchan, ep unsafe.Pointer, block bool) (selected, received bool)`
+
+阻塞式：调用 chanrecv 函数，并且 block = true
+
+```
+<ch
+
+v := <ch
+
+v, ok := <ch
+
+// 当channel关闭时，for循环会自动退出，无需主动监测channel是否关闭，可以防止读取已经关闭的channel,造成读到数据为通道所存储的数据类型的零值
+for i := range ch {
+    fmt.Println(i)
+}
+
+```
+
+非阻塞式：调用 chanrecv 函数，并且 block = false
+
+```
+select {
+    case <-ch:
+    ...
+
+  default
+}
+
+```
+
+向 channel 中接收数据时大概分为两大块，检查和数据发送，而数据接收流程如下：
+
+1. 如果 channel 的写等待队列存在发送者 goroutine
+   - 无缓冲 channel，直接从第一个发送者 goroutine 那里把数据拷贝给接收变量，唤醒发送的 goroutine
+   - 有缓冲 channel（已满），将循环数组 buf 的队首元素拷贝给接收变量，将第一个发送者 goroutine 的数据拷贝到 buf 循环数组队尾，唤醒发送的 goroutine
+2. 如果 channel 的写等待队列不存在发送者 goroutine
+   - buf 非空，将循环数组 buf 的队首元素拷贝给接收变量
+   - buf 为空，走阻塞接收的流程，将当前 goroutine 加入读等待队列，并挂起等待唤醒。
+
+关闭：关闭操作，调用 close 函数，编译时转换为 runtime.closechan 函数
+
+```
+package main
+
+import (
+    "fmt"
+    "time"
+    "unsafe"
+)
+
+func main() {
+  // ch是长度为4的带缓冲的channel
+  // 初始hchan结构体重的buf为空，sendx和recvx均为0
+    ch := make(chan string, 4)
+    fmt.Println(ch, unsafe.Sizeof(ch))
+    go sendTask(ch)
+    go receiveTask(ch)
+    time.Sleep(1 * time.Second)
+}
+
+// G1是发送者
+// 当G1向ch里发送数据时，首先会对buf加锁，然后将task存储的数据copy到buf中，然后sendx++，然后释放对buf的锁
+func sendTask(ch chan string) {
+    taskList := []string{"this", "is", "a", "demo"}
+    for _, task := range taskList {
+        ch <- task //发送任务到channel
+    }
+}
+
+// G2是接收者
+// 当G2消费ch的时候，会首先对buf加锁，然后将buf中的数据copy到task变量对应的内存里，然后recvx++,并释放锁
+func receiveTask(ch chan string) {
+    for {
+        task := <-ch                  //接收任务
+        fmt.Println("received", task) //处理任务
+    }
+}
+
+```
+
+总结 hchan 结构体的主要组成部分有四个：
+
+1. 用来保存 goroutine 之间传递数据的循环数组：buf
+2. 用来记录此循环数组当前发送或接收数据的下标值：sendx 和 recvx
+3. 用于保存向该 chan 发送和从该 chan 接收数组被阻塞的 goroutine 队列，sendq 和 recvq
+4. 保证 channel 写入和读取数据时线程安全的锁：lock
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go channel 有什么特点</font></p>
+
+1. channel 有 2 种类型：无缓冲、有缓冲
+2. channel 有 3 种模式：写操作模式（单向通道）、读操作模式（单向通道）、读写操作模式（双向通道）
+
+<table class="table table-bordered">
+<thead>
+<tr><th></th><th>写操作模式</th><th>读操作模式</th><th>读写操作模式</th></tr>
+</thead>
+<tbody>
+<tr><td>创建</td><td>make(chan&lt;- int)</td><td>make(&lt;-chan int)</td><td>make(chan int)</td></tr>
+</tbody>
+</table>
+
+3. channel 有 3 种状态：未初始化、正常、关闭。
+
+<table class="table table-bordered">
+<thead>
+<tr><th></th><th>未初始化</th><th>关闭</th><th>正常</th></tr>
+</thead>
+<tbody>
+<tr><td>关闭</td><td>panic</td><td>panic</td><td>正常关闭</td></tr>
+<tr><td>发送</td><td>永远阻塞导致死锁</td><td>panic</td><td>阻塞或者成功发送</td></tr>
+<tr><td>接收</td><td>永远阻塞导致死锁</td><td>缓冲区为空则为零值, 否则可以继续读</td><td>阻塞或者成功接收</td></tr>
+</tbody>
+</table>
+
+注意点：
+
+1. 一个 channel 不能多次关闭，会导致 panic
+2. 如果多个 goroutine 同时监听同一个 channel，那么 channel 上的数据都可能随机被某一个 goroutine 取走进行消费。
+3. 如果多个 goroutine 同时监听同一个 channel，如果这个 channel 被关闭，则所有的 goroutine 都能收到退出信号。
 
