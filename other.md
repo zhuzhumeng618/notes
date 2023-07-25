@@ -1501,6 +1501,13 @@ Broadcast() 方法会唤醒所有等待条件变量的 Goroutine，使它们都�
 
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>go WaitGroup</font></p>
 
+sync.WaitGroup 类型提供了一种方便的方式来等待多个 goroutine 完成他们的任务，WaitGroup 可以用来跟踪一组 goroutine，等待他们完成任务并汇总结果。
+
+需要注意的是，调用 Add() 方法之后必须调用 Done() 方法，否则会出现死锁等问题。另外，在等待所有 Goroutine 完成任务时，要确保所有 Goroutine 都已经调用了 Done() 方法，否则可能会导致程序永久阻塞。
+
+WaitGroup 还提供了一个 WaitGroup.Add() 方法，可以将计数器增加指定的值，以便一次性添加多个需要等待的 Goroutine。另外，WaitGroup 还支持嵌套使用，即在一个 Goroutine 中使用 WaitGroup 等待一组 Goroutine 完成任务，并在另一个 WaitGroup 中使用这个 Goroutine 作为一项任务等待其他 Goroutine 完成任务。
+
+
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
