@@ -1323,3 +1323,203 @@ func receiveTask(ch chan string) {
 2. 如果多个 goroutine 同时监听同一个 channel，那么 channel 上的数据都可能随机被某一个 goroutine 取走进行消费。
 3. 如果多个 goroutine 同时监听同一个 channel，如果这个 channel 被关闭，则所有的 goroutine 都能收到退出信号。
 
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go Mutex 四种状态</font></p>
+
+1. `mutexLocked：`表示互斥锁的锁定状态。
+2. `mutexWoken：`表示从正常模式被唤醒。
+3. `mutexStarving：`当前互斥锁进入饥饿状态。
+4. `waitersCount：`当前互斥锁上等待的 goroutine 个数。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go Mutex 正常模式和饥饿模式</font></p>
+
+1. 正常模式（非公平锁）：正常模式下，所有等待锁的 goroutine 按照 FIFO 先进先出顺序等待，唤醒的 goroutine 不会直接拥有锁，而是会和新请求 goroutine 竞争锁，新请求的 goroutine 更容易抢占，因为它正在 CPU 上执行，所以刚刚唤醒的 goroutine 有很大可能在锁竞争中失败，在这种情况下，这个被唤醒的 goroutine 会加入到等待队列的前面。
+2. 饥饿模式（公平锁）：为了解决等待 goroutine 队列的长尾问题，饥饿模式下，直接由 unlock 把锁交给等待队列中排在第一位的 goroutine（队头的 goroutine），同时，饥饿模式下，新进来的 goroutine 不会参与抢锁也不会进入自旋状态，会直接进入等待队列的尾部，这样很好解决了老的 goroutine 一直抢不到锁的场景。
+
+饥饿模式的触发条件：当一个 goroutine 等待锁时间超过 1ms 时，或者当前等待队列只剩下一个 goroutine 时，Mutex 切换到饥饿模式。
+
+对两种模式而言，正常模式下的性能是最好的，goroutine 可以连续多次获取锁，饥饿模式解决了取锁公平的问题，但是性能会下降，这其实是**性能**和**公平**的一个平衡模式。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go Mutex 允许自旋的条件</font></p>
+
+1. 锁已被占用，并且锁不处于饥饿模式。
+2. 积累的自旋次数小于最大自旋次数（active_spin = 4）
+3. CPU 核数大于 1
+4. 有空闲的 P
+5. 当前 goroutine 所挂载的 P 下，本地待运行队列为空
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go RWMutex 实现</font></p>
+
+sync.RWMutex 是 go 中提供的读写锁，用于在多个 goroutine 同时访问共享资源时进行数据的保护，与 sync.Mutex 类似，也是通过互斥锁实现的，但是它允许多个 goroutine 同时获取读锁，只允许一个 goroutine 获取写锁。
+
+```
+type RWMutex struct {
+    writerSem    chan struct{} // 写者用的信号量
+    readerSem    chan struct{} // 读者用的信号量
+    readerCount  int           // 当前持有读锁的goroutine数量
+    writerCount  int           // 当前持有写锁的goroutine数量
+    readerWait   int           // 正在等待读锁的goroutine数量
+    writerWait   int           // 正在等待写锁的goroutine数量
+    writerLocked bool          // 是否有goroutine持有写锁
+}
+
+func NewRWMutex() *RWMutex {
+    return &RWMutex{
+        writerSem: make(chan struct{}, 1),
+        readerSem: make(chan struct{}, 1),
+    }
+}
+
+// 获取读锁
+func (m *RWMutex) RLock() {
+    // 获取读锁的过程需要加锁
+    m.writerSem <- struct{}{} // 防止写者获取锁
+    m.readerSem <- struct{}{} // 获取读锁的信号量
+
+    // 更新状态
+    m.readerCount++
+    if m.writerLocked || m.writerWait > 0 {
+        m.readerWait++
+        <-m.readerSem // 等待写者释放锁
+        m.readerWait--
+    }
+
+    // 释放加锁时获取的信号量
+    <-m.writerSem
+}
+
+// 释放读锁
+func (m *RWMutex) RUnlock() {
+    // 获取读锁的过程需要加锁
+    m.writerSem <- struct{}{} // 防止写者获取锁
+
+    // 更新状态
+    m.readerCount--
+    if m.readerCount == 0 && m.writerWait > 0 {
+        <-m.writerSem // 优先唤醒写者
+    }
+
+    // 释放加锁时获取的信号量
+    <-m.writerSem
+}
+
+// 获取写锁
+func (m *RWMutex) Lock() {
+    // 获取写锁的过程需要加锁
+    m.writerSem <- struct{}{} // 防止其他写者获取锁
+    m.writerWait++
+
+    // 等待其他goroutine释放读锁或写锁
+    for m.writerLocked || m.readerCount > 0 {
+        <-m.readerSem
+    }
+
+    // 更新状态
+    m.writerWait--
+    m.writerLocked = true
+
+    // 释放加锁时获取的信号量
+    <-m.writerSem
+}
+
+// 释放写锁
+func (m *RWMutex) Unlock() {
+    // 获取写锁的过程需要加锁
+    m.writerSem <- struct{}{}
+
+    // 更新状态
+    m.writerLocked = false
+    if m.writerWait > 0 {
+        <-m
+
+    } else if m.readerWait > 0 {
+        for i := 0; i < m.readerCount; i++ {
+            m.readerSem <- struct{}{} // 优先唤醒读者
+        }
+    }
+
+    // 释放加锁时获取的信号量
+    <-m.writerSem
+}
+
+```
+
+sync.RWMutex 包含以下成员：
+
+1. writerSem 和 readerSem：用于同步的信号量通道，写锁会在 writerSem 上等待，读锁会在 readerSem 上等待。
+2. readerCount 和 writerCount：当前持有读锁和写锁的 goroutine 数量。
+3. readerWait 和 writerWait：正在等待读锁和写锁的 goroutine 数量。
+4. writerLocked：标记当前是否有 goroutine 持有写锁。
+
+在读锁和写锁获取和释放的过程中，都需要先获取 writerSem 信号量防止其他写者获取锁，获取读锁时，还需要获取 readerSem 信号量，而获取写锁时，需要等待其他 goroutine 释放读锁或写锁。
+
+这个实现中两个重要的细节：
+
+1. 优先唤醒写者：在释放读锁或写锁时，如果有正在等待的写锁 goroutine，应该优先唤醒他们，因为写锁的优先级更高。
+2. 读锁的等待问题：在等待读锁的 goroutine 中，如果有其他 goroutine 正在持有写锁或等待写锁，那么这些读锁 goroutine 应该等待写锁 goroutine 释放锁，避免因等待读锁而导致写锁饥饿。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go RWMutex 注意事项</font></p>
+
+1. RWMutex 是单写多读锁，该锁可以加多个读锁或一个写锁。
+2. 读锁占用的情况下会阻止写，不会阻止读，多个 goroutine 可以同时获取读锁。
+3. 写锁会阻止其他 goroutine（无论读和写）进来，整个锁由该 goroutine 独占。
+4. 是用于读多写少的场景。
+5. RWMutex 类型变量的零值是一个未锁定状态的互斥锁。
+6. RWMutex 在首次被使用之后就不能再被拷贝。
+7. RWMutex 的读锁和写锁在未锁定的状态，解锁操作都会引发 panic。
+8. RWMutex 的一个写锁去锁定临界区的共享资源，如果临界区的共享资源已 被（读锁或写锁）锁定，这个写锁操作的 goroutine 将被阻塞直到解锁。
+9. RWMutex 的读锁不要用于递归调用，比较容易产生死锁。
+10. RWMutex 的锁定状态与特定的 goroutine 没有关联。一个 goroutine 可以 RLock（Lock），另一个 goroutine 可以 RUnlock（Unlock）
+11. 写锁被解锁后，所有因操作锁定读锁而被阻塞的 goroutine 会被唤醒，并都可以成功锁定读锁
+12. 读锁被解锁后，在没有被其他读锁锁定的前提下，所有因操作锁定写锁而被阻塞的 goroutine，其中等待时间最长的一个 Goroutine 会被唤醒。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go Cond</font></p>
+
+在 go 语言中，sync.Cond 是一个条件变量的实现，他可以在多个 goroutine 之间传递信号和数据，条件变量是一种同步机制，用于解决某些 goroutine 需要等待某个事件或条件发生的问题。
+
+sync.Cond 是基于 sync.Mutex 或 sync.RWMutex 的，提供了 Wait()、Signal()、Broadcast() 三个方法：
+
+1. Wait()：释放锁并阻塞当前 goroutine，直到调用 Signal() 或 Broadcast() 并重新获得锁，在阻塞期间，goroutine 处于等待状态并且不会消耗 CPU 资源。
+2. Signal()：唤醒一个等待中的 goroutine。
+3. Broadcast()：唤醒所有等待中的 goroutine。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go Signal() 和 Broadcast() 区别</font></p>
+
+在 Go 语言中，sync.Cond 类型提供了Broadcast() 和 Signal() 两个方法来唤醒等待条件变量的 Goroutine。这两个方法的区别在于：
+
+Signal() 方法只会唤醒等待条件变量的一个 Goroutine，具体哪个 Goroutine 会被唤醒是不确定的。如果多个 Goroutine 等待同一个条件变量，那么只会有一个 Goroutine 被唤醒，其他 Goroutine 仍然会继续等待条件变量。
+
+Broadcast() 方法会唤醒所有等待条件变量的 Goroutine，使它们都开始运行。如果多个 Goroutine 等待同一个条件变量，那么所有 Goroutine 都会被唤醒。
+
+一般来说，使用 Signal() 方法可以提高程序的效率，因为只需要唤醒一个 Goroutine，其他 Goroutine 仍然会等待条件变量，不会消耗 CPU 资源。但是，如果有多个 Goroutine 都需要同时等待条件变量，那么使用 Broadcast() 方法才能保证它们都能被唤醒，否则可能会出现死锁等问题。
+
+总之，Broadcast() 方法是一种安全可靠的方法，但是可能会导致一些性能问题。而 Signal() 方法则可以提高程序的效率，但是需要确保程序的正确性。在实际应用中，应该根据具体情况选择合适的方法。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go cond wait() 使用</font></p>
+
+在 Go 语言中，sync.Cond 类型提供了 Wait() 方法来让 Goroutine 等待条件变量。当 Goroutine 调用 Wait() 方法时，它会释放已经持有的锁，并阻塞在条件变量上，直到另一个 Goroutine 调用 Signal() 或 Broadcast() 方法，并释放锁，唤醒了它。被唤醒的 Goroutine 会重新尝试获得锁，然后继续执行。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go WaitGroup</font></p>
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+
