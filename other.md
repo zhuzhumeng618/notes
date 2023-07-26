@@ -1561,22 +1561,259 @@ Do() 是阻塞的，在第一次调用还没有完成之前，后续的调用会
 
 原子操作是一种不可中断的操作，多线程环境下，原子操作可以保证数据的一致性和可靠性，防止多个线程同时对同一数据进行操作而导致的竞争条件和数据不一致。
 
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+sync.atomic 提供原子操作函数，用于在多线程环境中执行原子操作，这些原子操作函数可以确保对共享变量的访问是原子的，不会被其他线程打断。
+
+**原子操作函数仅保证对共享变量的访问是原子的，但并不能保证对多个变量之间的操作是原子的，如果需要对多个变量进行原子操作，可以使用互斥锁或其他同步机制来保证线程安全。**
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 原子操作和锁的区别</font></p>
+
+go 中的原子操作和锁都是用于保证并发安全的机制。
+
+原子操作是一种特殊的操作，它可以在单个 CPU 指令周期内完成对共享变量的读取和修改，从而保证了操作的原子性。在 Go 中，使用 sync/atomic 包提供的原子操作函数可以对共享变量进行原子操作，从而避免了多个 Goroutine 对同一变量进行并发修改时出现的竞争条件问题。原子操作不需要获取锁，因此效率比锁更高，但是只适用于一些简单的操作，比如读取和修改整数类型的变量。
+
+锁是另一种保证并发安全的机制，它可以确保同一时间只有一个 Goroutine 可以访问共享资源。在 Go 中，使用 sync 包提供的锁可以实现互斥访问共享资源的目的。锁的机制需要获取锁才能对共享变量进行操作，因此效率比原子操作略低。但是锁可以用于任何类型的变量，而不仅仅是整数类型的变量，因此可以用于更复杂的操作。
+
+如果需要对简单的整数类型变量进行原子操作，可以使用原子操作；
+
+如果需要对任意类型的变量进行并发安全的操作，应该使用锁。
+
+需要根据具体的应用场景选择使用哪种机制，以获得最佳的性能和可靠性。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go CAS</font></p>
+
+CAS，即 Compare-And-Swap，是一种常见的并发控制机制，也是原子操作的一种。它用于实现在多个线程并发修改同一数据时的同步和互斥访问，是实现锁、并发队列等数据结构的基础。
+
+CAS 操作需要三个参数：内存地址 V，期望值 A 和新值 B。CAS 操作的执行过程如下：
+
+1. 比较内存地址 V 中存储的值是否与 A 相等。
+2. 如果相等，则将 V 更新为 B。
+3. 如果不相等，说明其他线程已经修改了 V 值，CAS 操作失败，需要重新尝试。
+
+需要注意的是，CAS 操作虽然可以避免锁的使用，提高了并发性能，但是也存在一些问题，比如 ABA 问题。因此在使用 CAS 操作时，需要谨慎设计并发控制策略，以确保线程安全。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go sync.pool</font></p>
+
+一个对象池实现，作用是缓存对象，减少对象的创建和销毁后的垃圾回收，从而提高程序的性能。
+
+对象池作用：因为在程序中，创建和销毁对象是很耗费时间和资源的操作，特别是在高并发情况下，如果能够复用已经创建好的对象，就可以减少对象的创建和垃圾回收，提高程序的性能。
+
+sync.pool 维护**空闲对象池（存储可重复使用的对象）**和**新对象池（存储不能重复使用的对象）。**
+
+在使用对象时，首先从空闲对象池中获取对象，如果空闲对象池为空，则从新对象池中获取对象，如果新对象池也为空，则创建一个新对象，使用完对象后，将对象放回空闲对象池中。
+
+sync.pool 并不保证对象一定会被重用，如果空闲对象池中没有可用的对象，或者对象达到了一定的数量限制，那么 pool 会选择创建新对象，在使用 sync.pool 时，需要谨慎设计对象的数量和生命周期，以确保对象的重复使用。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go goroutine</font></p>
+
+goroutine 是 go 语言的一种轻量级线程实现，可以在单个进程中同时执行多个任务，实现了并发编程，与传统的线程相比，goroutine 的创建和切换开销非常小，轻松创建 goroutine，而不会导致系统资源的耗尽。
+
+goroutine 是由 go 运行时环境调度的，并不是线程和进程，每个 goroutine都是由 go 运行时环境自动分配的，他们共享相同的地址空间和堆栈，因此，在 goroutine 中共享内存需要采用同步机制来保证线程安全。
+
+goroutine 是 go 语言的核心特性之一，它使得并发编程变得简单而高效，合理使用 goroutine 可以充分发挥多核 CPU 的性能，提高程序的并发处理能力。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go GMP</font></p>
+
+GMP 是指 go 运行时的三个关键组件：Goroutine、Machine(机器)、Processor(处理器)。
+
+Machine 是 go 运行时的机器模型，是操作系统线程（OS thread）和 goroutine 之间的中间件，go 中每个 goroutine 都会被分配到一个 M 上执行，而每个 M 只能同时执行一个 goroutine，这是 go 实现并发关键之一，当一个 goroutine 阻塞或者需要等待 I/O 操作时，对应的 M 会被回收，等待其他 goroutine 上的任务。
+
+Processor 是 go 运行时的处理器，负责调度 goroutine 在 M 上运行，同时也负责管理 goroutine 的队列、调度等工作，在 go 中 P 的数量是可以配置的，默认情况下为机器的核心数，但是可以通过环境变量 GOMAXPROCS 来进行修改。
+
+GMP 模型在 go 中实现了一种高效的并发编程机制，可以轻松创建数以千计的 goroutine，实现并发编程，而不会导致系统资源的耗尽，同时，GMP 模型也提供了一个高度灵活的调度器，可以自动地调整 goroutine 的数量和 P 的数量，以适应不同的负载。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 1.0 之前的 GM 调度模型</font></p>
+
+version 1.0 前，go 运行时使用的是 GM 调度模型，与现在的 GMP 调度模型有所不同，在 GM 模型中，Machine 和 Processor 被合并为一个单一的调度器，称为 goroutine 调度器。
+
+在 GM 模型中，所有的 goroutine 都被分配到一个全局的 goroutine 队列中，每个 M 都会从队列中取出一个 goroutine 来执行。当一个 goroutine 阻塞或者需要等待 I/O 操作时，对应的 M 会回收它，并从全局队列中取出另外一个 goroutine 继续执行，这样，一个 M 可以执行多个 goroutine，而不像现在的 GMP 模型只能执行一个。
+
+GM 模型相对于 GMP 模型的优势是它的调度器更加简单，同时在低负载的情况下可以更加高效地利用系统资源，然而，GM 模型也存在一些问题，最大的问题是在高负载的情况下，由于所有的 goroutine 都被放在全局队列中，导致竞争变得非常激烈，从而降低了并发性能，另外，GM 模型也无法支持多核 CPU 的并行执行，因为它只有一个单一的调度器。
+
+因此，从 go 1.0 开始，go 语言的运行时采用了 GMP 调度模型，通过引入 M 和 P 的概念，实现了更加高效的并发编程机制，同时支持多核 CPU 的并行执行。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go GMP 调度流程</font></p>
+
+1. 初始化：在程序启动时，运行时会初始化一个 G 调度器和一组 M 线程，调度器用于调度 goroutine 的执行，M 线程用于执行 goroutine。
+2. goroutine 创建和调度：当程序启动时，会创建一个主 goroutine，然后程序可以创建更多的 goroutine，每个 goroutine 都有一个 G 对象，其中包含了 goroutine 的状态和执行栈，当一个 goroutine 被创建时，会被加入到一个本地队列中等待调度。
+3. M 的绑定：在 GMP 调度模型中，每个 M 线程都会绑定一个 P，P 负责调度 goroutine 的执行，当一个 M 线程启动时，他会尝试获取一个 P 来绑定，如果当前没有可用的 P，他就会等待直到有一个可用的 P。
+4. P 的调度：P 会不断从全局队列和本地队列中获取 Goroutine 并将其调度到绑定的 M 线程上执行。如果一个 Goroutine 阻塞或者需要等待 I/O 操作时，P 会将其从 M 上回收，并将 M 设置为闲置状态。在此期间，P 会从全局队列和其他 M 的本地队列中获取更多的 Goroutine 并将其调度到闲置的 M 上执行。
+5. 阻塞和唤醒：当一个 Goroutine 阻塞或者需要等待 I/O 操作时，它会被回收并从本地队列中移除。当阻塞或等待结束时，它会重新加入到本地队列中等待调度。
+6. 关闭和退出：当程序结束时，所有的 Goroutine 都会被终止并回收。此外，程序也可以使用 channel 等机制来通知 Goroutine 退出并回收资源。
+
+总的来说，GMP 调度模型是 Go 语言运行时的核心机制，它通过多线程和协作调度等技术实现了高效的并发编程，支持多核 CPU 的并行执行。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go GMP 中的 work stealing 机制</font></p>
+
+就是偷 goroutine
+
+GMP 中的 work stealing 机制是指在某个 M 线程的本地队列中没有 Goroutine 可供执行时，它会从其他 M 线程的本地队列中偷取 Goroutine 来执行。
+
+work stealing 机制的实现过程如下：
+
+1. 每个 M 线程都有一个本地队列，用于存储待执行的 Goroutine。当一个 Goroutine 被创建时，它会被加入到一个本地队列中等待调度。
+2. 当一个 M 线程的本地队列中没有 Goroutine 可供执行时，它会从其他 M 线程的本地队列中随机选择一个队列，并尝试从该队列中偷取一些 Goroutine 来执行。在此期间，当前 M 线程会不断尝试从全局队列中获取 Goroutine 并将其调度到本地队列中执行。
+3. 当一个 M 线程偷取了其他 M 线程的 Goroutine 后，它会将这些 Goroutine 添加到自己的本地队列中，并将它们调度到绑定的 P 上执行。
+
+work stealing 机制的好处是可以避免线程饥饿，提高 Goroutine 的调度效率。当某个 M 线程的本地队列中没有 Goroutine 可供执行时，它可以从其他 M 线程的队列中偷取 Goroutine 来执行，从而提高整个系统的并发能力和负载均衡性。同时，由于 work stealing 机制的实现比较复杂，因此在高并发场景下可能会增加一些额外的开销，需要谨慎使用。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go GMP 中 hand off 机制</font></p>
+
+GMP 中的 hand off 机制是指在某个 M 线程需要将当前正在执行的 Goroutine 交给另一个 M 线程时，使用的一种机制。
+
+具体地，hand off 机制的实现过程如下：
+
+1. 当一个 M 线程需要将当前正在执行的 Goroutine 交给另一个 M 线程时，它会将该 Goroutine 和一个指向目标 M 线程的指针打包成一个结构体，称为 hand off 对象。
+2. 当目标 M 线程的本地队列中没有 Goroutine 可供执行时，它会从全局队列中获取一个 hand off 对象，并尝试将其中的 Goroutine 从原来的 M 线程中获取出来，添加到自己的本地队列中执行。在此期间，当前 M 线程会不断尝试从全局队列中获取 Goroutine 并将其调度到本地队列中执行。
+3. 当目标 M 线程成功获取到 hand off 对象后，它会将其中的 Goroutine 添加到自己的本地队列中，并将它们调度到绑定的 P 上执行。
+
+hand off 机制的好处是可以避免线程饥饿，提高 Goroutine 的调度效率。当一个 M 线程需要将当前正在执行的 Goroutine 交给另一个 M 线程时，可以使用 hand off 机制来尽快地将 Goroutine 交给目标 M 线程，从而避免线程饥饿的问题。同时，由于 hand off 机制只在需要将当前正在执行的 Goroutine 交给另一个 M 线程时才会被使用，因此相对于 work stealing 机制来说，它的实现比较简单，不会增加太多额外的开销。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 协作式的抢占式调度</font></p>
+
+go 中 goroutine 调度器采用的是协作式调度，在一个 goroutine 执行过程中，如果没有主动交出控制权，其它 goroutine 无法进行抢占执行，这样可以避免出现线程安全的问题，但也会导致某个 goroutine 长时间占用 CPU 时间，从而降低程序整体的并发性能。
+
+为了解决这个问题，Go 语言在 1.14 版本引入了抢占式调度。抢占式调度的主要思想是，在 Goroutine 执行过程中，如果某个 Goroutine 执行时间过长，会被强制抢占，让其他 Goroutine 有机会执行。这样可以保证所有 Goroutine 公平地获得 CPU 时间，从而提高程序的并发性能。
+
+在抢占式调度中，Go 语言采用了基于信号的抢占方式。具体来说，当一个 Goroutine 执行时间过长时，会在指定时间内收到一个抢占信号，然后在信号处理程序中暂停当前 Goroutine 的执行，并将控制权交给调度器，让调度器决定下一个要执行的 Goroutine。当下一个 Goroutine 开始执行时，之前被暂停的 Goroutine 就被称为“被抢占”的 Goroutine。
+
+需要注意的是，抢占式调度只在 Go 语言的系统线程中生效，而在非系统线程中，仍然采用协作式调度。这是因为非系统线程是由 Go 语言运行时管理的，无法被操作系统直接抢占，因此只能采用协作式调度。另外，抢占式调度对于需要实现低延迟的应用程序可能不太适合，因为抢占操作需要额外的 CPU 时间，从而增加了系统的响应时间。
+
+需要注意的是，抢占式调度并不是默认启用的，如果要启用抢占式调度，可以通过设置 GOMAXPROCS 环境变量或调用 runtime.GOMAXPROCS() 函数来指定使用的系统线程数。当 GOMAXPROCS 的值大于 1 时，Go 语言会自动启用抢占式调度。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 基于信号的抢占式调度</font></p>
+
+在 golang 中，除了协作式调度和抢占式调度，还有一种基于信号的抢占式调度。基于信号的抢占式调度可以让 Goroutine 在执行过程中被立即中断，并强制切换到其他 Goroutine，从而实现抢占式调度。
+
+在 golang 中，我们可以使用 runtime 包中的两个函数实现基于信号的抢占式调度：
+
+1. runtime.Gosched()：让出 CPU 时间片，让其他 Goroutine 运行。
+2. runtime.LockOSThread()：将当前 Goroutine 绑定到当前线程上，让该 Goroutine 独占一个线程，从而实现更精细的调度控制。
+
+需要注意的是，基于信号的抢占式调度不适用于所有场景，因为频繁调用 runtime.Gosched() 函数会导致性能下降，应该根据实际需求进行选择。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go GMP 调度过程中存在哪些阻塞</font></p>
+
+在 GMP（GNU 多精度算术库）调度过程中，可能会存在以下几种阻塞情况：
+
+1. IO 阻塞：当 GMP 库进行 IO 操作时，如果 IO 操作需要等待数据读取或写入，此时 GMP 库的调度可能会被阻塞。
+2. 系统调用阻塞：当 GMP 库使用系统调用时，如申请内存、获取时间等，如果系统调用需要等待结果返回，此时 GMP 库的调度可能会被阻塞。
+3. 锁竞争阻塞：当多个线程同时访问 GMP 库的同一个数据结构时，可能会出现锁竞争的情况，如果某个线程获得锁并持有锁的时间过长，其他线程的调度可能会被阻塞。
+4. 垃圾回收阻塞：在 GMP 库中，存在一种称为“垃圾回收”的机制，用于释放不再使用的内存。当垃圾回收机制启动时，所有线程的调度都会被暂停，直到垃圾回收完成。
+
+总之，GMP 调度过程中的阻塞情况可能会导致程序执行时间延长，因此在编写 GMP 应用程序时需要考虑如何避免或减少阻塞情况的发生。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go Sysmon</font></p>
+
+监控线程，变动的周期性检查，好处：
+
+1. 释放闲置超过 5 分钟的 span（跨距） 物理内存。
+2. 如果超过 2 分钟没有垃圾回收，强制执行。
+3. 将长时间未处理的 netpoll（网络轮询） 添加到全局队列。
+4. 向长时间运行的 G 任务发出抢占调度（超过 10ms 的 g，会进行 retake（重拍））
+5. 收回因 syscall（系统调用） 长时间阻塞的 P。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 三色标记</font></p>
+
+三色标记算法：垃圾回收算法中常用的一种，也是 go 中垃圾回收器采用的算法之一。
+
+三色标记算法基本思路是将内存中的对象分为三种状态：
+
+1. 白色（未访问）
+2. 灰色（已访问，未处理）
+3. 黑色（已访问，已处理）
+4. 并按照一定的顺序遍历所有对象，标记出所有可达的对象，最终清除不可达的对象。
+
+三色标计算法步骤：
+
+1. 初始时，所有对象都是白色，加入一个根集合（root set），根集合是一组已知可达对象的集合，如全局变量、函数调用栈等。
+2. 将根集合中的所有对象标记为灰色，并加入一个“灰色集合”（gray set）中。
+3. 从灰色集合中取出一个灰色对象，遍历其引用的所有对象，如果某个对象是白色，将其标记为灰色，并加入灰色集合中；如果某个对象是灰色，不做处理；如果某个对象是黑色，不做处理。
+4. 将该灰色对象标记为黑色，并从灰色集合中移除。
+5. 重复步骤 3 和 4，直到灰色集合为空。
+
+此时所有可达对象都被标记为黑色，所有不可达对象都是白色，将所有白色对象标记为垃圾，并回收其占用的内存空间。
+
+在 Go 语言中，三色标记算法是垃圾回收器采用的一种算法，其中还包括了其他的优化算法，如并发标记（Concurrent Mark）和并发清除（Concurrent Sweep）。Go 的垃圾回收器会在程序运行时自动启动，不需要手动管理内存，大大减少了程序员的工作量。
+
+![GC-三色标记算法](./images/other/GC-三色标记算法.png)
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 写屏障</font></p>
+
+在 Go 语言的垃圾回收机制中，写屏障（Write Barrier）是一种机制，用于保证内存对象在进行垃圾回收过程中的正确性。写屏障是通过在程序运行过程中对写操作进行监测来实现的。如果一个指针变量被修改为指向一个新的内存对象，写屏障会将被修改的指针变量所指向的对象标记为“灰色”状态，并将新指向的对象标记为“黑色”状态，以确保该对象不被误判为垃圾对象。在垃圾回收过程中，只有标记为“黑色”状态的对象才能被视为可达对象，而未被标记或者被标记为“灰色”状态的对象则被认为是不可达对象，可以被回收。
+
+在 Go 语言中，写屏障是由垃圾回收器来实现的，Go 编译器会在需要使用写屏障的地方插入相应的代码。具体来说，当一个指针变量被修改为指向一个新的对象时，Go 编译器会在生成的汇编代码中插入一个钩子（Hook）函数，这个钩子函数会在对象头中设置一个标志位，表示该对象需要被扫描，以便在垃圾回收的过程中正确地标记该对象。
+
+需要注意的是，写屏障虽然可以提高垃圾回收的准确性，但也会带来一定的性能开销，因为需要在写操作时对对象进行监测和处理。因此，在 Go 语言中，写屏障只在必要的情况下才会被触发。同时，也可以通过一些手段来减少写屏障的触发次数，如尽可能减少对象的复制和移动，或者将一些对象的内存布局重新调整，以减少垃圾回收时的复杂度。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 插入写屏障</font></p>
+
+在 Go 语言中，插入写屏障的具体实现方式是通过调用内置函数 writebarrier 来实现的。writebarrier 函数接收两个参数，第一个参数是指向指针变量的指针（也就是指针变量的地址），第二个参数是新的指针值。当程序执行到 writebarrier 函数时，垃圾回收器会监测指针变量的修改，并根据新的指针值来更新对象的标记状态，以保证垃圾回收的正确性。
+
+需要注意的是，在实际使用中，我们通常不需要手动插入写屏障，因为 Go 语言的垃圾回收机制会自动为我们插入写屏障。只有在编写某些底层库或者需要手动管理内存的场景下，才需要手动插入写屏障。
+
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
 
+Go 语言的垃圾回收器会自动为我们插入写屏障，因此通常不需要手动插入写屏障。在某些特殊情况下，我们可能需要删除写屏障，例如在编写一些性能敏感的代码时。在 Go 1.15 及之前的版本中，我们可以通过 //go:nowritebarrier 注释来实现删除写屏障。在 Go 1.16 版本中，删除写屏障的方式发生了变化，现在需要使用内置函数 nowritebarrier 来实现。
+
+需要注意的是，删除写屏障可能会导致垃圾回收的不准确性，因此在使用时应谨慎。通常情况下，我们不建议删除写屏障。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 混合写屏障</font></p>
+
+Go 语言的垃圾回收器使用了混合写屏障（Mixed-Mode Write Barrier）来提高垃圾回收的效率和准确性。混合写屏障结合了写屏障和并发标记，可以在不暂停程序运行的情况下进行垃圾回收，并且可以最大程度地减少对程序性能的影响。
+
+混合写屏障是在 Go 1.5 版本中引入的。与 Go 1.4 版本及之前的版本不同，Go 1.5 版本开始使用混合写屏障进行垃圾回收。在混合写屏障中，写屏障会在并发标记过程中被触发。写屏障的作用是在对象被修改后，标记被修改的对象，并将对象的指针添加到待处理队列中。在并发标记过程中，垃圾回收器会扫描这些队列，并将其中的对象标记为活动对象。
+
+需要注意的是，混合写屏障的实现方式可能会因为不同的垃圾回收器版本而有所不同。因此，在使用混合写屏障时，应该仔细查阅相关文档，确保代码的正确性和兼容性。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go GC 触发时机</font></p>
+
+Go 语言的垃圾回收器采用了自适应的垃圾回收策略，会根据当前程序的运行情况和垃圾回收的历史记录动态地调整垃圾回收的触发时机和策略。在一般情况下，垃圾回收器会在下列情况下触发垃圾回收：
+
+1. 内存占用达到阈值：当程序使用的内存超过一定的阈值时，垃圾回收器会被触发，回收无用的内存，以避免进一步的内存占用。
+2. 分配速率超过阈值：当程序的内存分配速率超过一定的阈值时，垃圾回收器会被触发，回收无用的内存，以避免进一步的内存占用。
+3. 空闲时间超过阈值：当程序空闲时间超过一定的阈值时，垃圾回收器会被触发，回收无用的内存，以避免内存泄漏。
+4. 调用 runtime.GC() 函数：程序可以调用 runtime.GC() 函数主动触发垃圾回收。
+
+需要注意的是，Go 语言的垃圾回收器是并发的，因此在程序运行过程中，垃圾回收器可能会随时被触发。此外，Go 语言还提供了一些垃圾回收相关的环境变量和参数，可以用于调整垃圾回收的触发时机和策略。例如，可以通过设置 GOGC 环境变量来调整垃圾回收的阈值，也可以通过设置 GODEBUG 环境变量来查看垃圾回收的相关信息。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go GC 流程</font></p>
+
+Go 语言中的垃圾回收是自动的，采用了并发、分代的垃圾回收策略。下面是 Go 语言中垃圾回收的大致流程：
+
+1. 标记阶段（Marking Phase）：垃圾回收器首先从根对象（如全局变量、栈变量等）出发，标记所有可达的对象，标记完成后，所有未被标记的对象就可以被回收了。
+2. 清除阶段（Sweeping Phase）：在清除阶段，垃圾回收器会遍历整个堆，将未被标记的对象进行回收，并将已回收的内存加入空闲链表，以供下次分配使用。
+3. 整理阶段（Compacting Phase）：在清除阶段结束后，堆中会留下大量不连续的内存碎片，这会影响程序的性能。因此，垃圾回收器会在需要的时候进行整理，将存活的对象移动到一段连续的内存空间中，从而消除内存碎片。
+
+需要注意的是，Go 语言的垃圾回收器是并发的，它可以在程序继续运行的同时进行垃圾回收，不会影响程序的正常运行。此外，Go 语言的垃圾回收器还采用了分代策略，将堆分为多个代，每个代使用不同的回收策略。在每次回收中，垃圾回收器会优先回收较老的对象，从而减少垃圾回收的开销。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go GC 调优</font></p>
+
+Go 语言的垃圾回收器是自动运行的，它会自动检测堆的大小、活动对象的数量等信息，并根据这些信息来调整垃圾回收的策略和频率。但是，如果应用程序的内存使用模式比较特殊，或者对响应时间、吞吐量等方面有特殊的需求，我们可以通过调整一些参数来优化垃圾回收器的性能。以下是一些常见的调优方法：
+
+1. GOGC 环境变量：可以通过设置 GOGC 环境变量来调整垃圾回收的频率和策略。GOGC 的默认值是 100，表示每个新的内存分配都会触发垃圾回收，这可能会影响程序的响应时间和吞吐量。如果程序需要更高的吞吐量和更低的延迟，可以将 GOGC 的值增大，例如 200 或 300，来减少垃圾回收的频率。
+2. 内存池：可以通过使用 sync.Pool 等内存池来减少内存分配和回收的开销，从而减轻垃圾回收的压力。
+3. 对象大小和生命周期：可以尽量使用较小的对象，并尽可能减少对象的生命周期，从而减少内存的占用和垃圾回收的开销。
+4. 避免过度分配：可以使用性能分析工具来检测程序中是否存在过度分配的情况，并尽可能减少内存分配的次数和大小，从而减少垃圾回收的开销。
+5. 并发垃圾回收：Go 语言的垃圾回收器是并发的，可以在程序运行时自动调整垃圾回收的频率和策略，从而最大限度地减少对程序性能的影响。可以通过修改 GOMAXPROCS 环境变量来控制垃圾回收器使用的 CPU 核数，从而提高并发度，进一步提升程序的性能。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go channel 线程安全</font></p>
+
+Go channel 是线程安全的，原因在于 channel 内部实现了同步机制，它可以保证在多个 goroutine 之间的同步和互斥访问。
+
+具体来说，Go channel 内部实现了两个重要的操作：发送和接收。当一个 goroutine 向一个 channel 发送数据时，如果 channel 已满，那么发送操作会被阻塞，直到 channel 中有足够的空间。同样地，当一个 goroutine 从一个 channel 接收数据时，如果 channel 已空，那么接收操作也会被阻塞，直到 channel 中有新的数据可供接收。
+
+这种阻塞式的操作可以保证 channel 在多个 goroutine 之间的同步和互斥访问，从而避免了多个 goroutine 同时对同一个变量进行修改的竞争条件（race condition）问题。而在 Go 语言中，对于同一个变量的竞争条件问题是需要通过同步机制来解决的。
+
+因此，通过使用 channel，我们可以很方便地实现多个 goroutine 之间的数据交换和同步，而不必担心竞争条件问题。同时，Go channel 还具有一些其他的优点，例如可以实现单向通信、支持多路复用、可用于控制流等。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go channel 控制 goroutine 并发执行顺序</font></p>
+
+Go channel 可以用于控制 goroutine 的并发执行顺序。具体来说，我们可以利用 channel 的阻塞特性来控制 goroutine 的执行顺序。
+
+比如，我们可以创建一个带缓冲的 channel，并在 goroutine 中向该 channel 中发送数据。当缓冲区已满时，该 goroutine 会被阻塞，直到有其他 goroutine 从 channel 中接收数据，释放出缓冲区空间为止。这样，我们就可以利用 channel 的缓冲区大小来控制 goroutine 的并发执行数量。
+
+另外，我们还可以使用无缓冲的 channel 来控制 goroutine 的执行顺序。具体来说，我们可以利用 channel 的阻塞特性和同步机制来保证 goroutine 的有序执行。
+
+比如，我们可以创建两个 goroutine，其中一个 goroutine 向一个无缓冲的 channel 发送数据，另一个 goroutine 从该 channel 中接收数据，当该 channel 中有数据时，才会执行该 goroutine。这样，我们就可以保证第一个 goroutine 先执行，并将数据发送到 channel 中，然后第二个 goroutine 才能执行，并从该 channel 中接收数据。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go channel 共享内存有什么优劣势</font></p>
