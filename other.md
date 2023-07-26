@@ -1507,10 +1507,60 @@ sync.WaitGroup 类型提供了一种方便的方式来等待多个 goroutine 完
 
 WaitGroup 还提供了一个 WaitGroup.Add() 方法，可以将计数器增加指定的值，以便一次性添加多个需要等待的 Goroutine。另外，WaitGroup 还支持嵌套使用，即在一个 Goroutine 中使用 WaitGroup 等待一组 Goroutine 完成任务，并在另一个 WaitGroup 中使用这个 Goroutine 作为一项任务等待其他 Goroutine 完成任务。
 
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go WaitGroup 实现原理</font></p>
 
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
-# <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
+通过一个计数器实现，调用 WaitGroup.Add(n) 方法时，会将计数器的值增加 n，当调用 WaitGroup.Done() 方法时，会将计数器的值减 1，当调用 WaitGroup.Wait() 方法时，会阻塞等待，直到计数器的值为 0。
+
+```
+type WaitGroup struct {
+    counter int32
+    cond    *sync.Cond
+}
+
+func NewWaitGroup() *WaitGroup {
+    return &WaitGroup{
+        counter: 0,
+        cond:    sync.NewCond(&sync.Mutex{}),
+    }
+}
+
+func (wg *WaitGroup) Add(delta int) {
+    atomic.AddInt32(&wg.counter, int32(delta))
+}
+
+func (wg *WaitGroup) Done() {
+    atomic.AddInt32(&wg.counter, -1)
+    if wg.counter == 0 {
+        wg.cond.Broadcast()
+    }
+}
+
+func (wg *WaitGroup) Wait() {
+    wg.cond.L.Lock()
+    for wg.counter > 0 {
+        wg.cond.Wait()
+    }
+    wg.cond.L.Unlock()
+}
+
+```
+
+在 Add() 方法中，使用原子操作将计数器的值增加指定的值，在 Done() 方法中，使用原子操作将计数器的值减 1，并检查计数器是否为 0，如果计数器为 0，说明所有 goroutine 都已经完成任务，我们就可以使用 sync.Cond.Broadcast() 方法通知所有正在等待的 goroutine 继续执行。
+
+在 Wait() 方法中，首先获取互斥锁，然后在一个循环中等待计数器的值为 0，在循环中，使用 sync.Cond.Wait() 方法进行协程阻塞，并等待条件变量上的通知，当计数器的值为 0，说明所有 goroutine 都已经完成任务，就可以退出循环，并释放互斥锁。
+
+复杂版需要考虑 WaitGroup 嵌套使用情况，还要考虑 WaitGroup 计数器被减为负数的情况，但基本原理和简化版差不多。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go sync.Once</font></p>
+
+go 中的同步原语，实现只执行一次的操作，可以保证多个 goroutine 中只执行一次指定的操作，即使这个操作被多次调用。
+
+Do() 是阻塞的，在第一次调用还没有完成之前，后续的调用会被阻塞，保证只有一个 goroutine 执行指定的操作，其它 goroutine 等待它完成之后再继续执行，此外，Do() 方法只执行一次指定的操作，即使在多个 goroutine 中调用它，这个特性可以用来避免重复初始化等问题。
+
+# <p style ='background-color:#894e54;text-align:center;'><font color='white'>go 原子操作</font></p>
+
+原子操作是一种不可中断的操作，多线程环境下，原子操作可以保证数据的一致性和可靠性，防止多个线程同时对同一数据进行操作而导致的竞争条件和数据不一致。
+
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>#</font></p>
