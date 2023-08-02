@@ -356,6 +356,13 @@ git remote -v
 git remote add 别名 远程仓库地址
 ```
 
+修改远程仓库别名名称：
+
+```
+git remote -v
+git remote rename oldName newName
+```
+
 ## <p style ='background-color:#8076a3;text-align:center;'><font color='white'>推送远程库</font></p>
 
 ```
