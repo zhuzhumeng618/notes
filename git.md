@@ -82,6 +82,7 @@ git remote add origin 远程仓库 SSH
 git remote show origin              - 显示远程库 origin 里的资源
 git remote show                     - 查看远程库
 git remote add origin 远程仓库 HTTPS
+git remote rename oldName newName   - 修改本地的远程仓库名
 ----------------------------------------------------------------------------
 git pull                            - 本地与服务器端同步
 git merge origin/dev                - 将分支 dev 与当前分支进行合并
