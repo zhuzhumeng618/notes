@@ -327,9 +327,24 @@ git merge 分支名
 
 产生原因：合并分支时，两个的分支在同一个位置都有修改，Git 无法判断保留哪个分支的提交。
 
-会出现：(master|otherBranch) 分支正在进行合并的状态。
+会出现：(master|merging) 分支正在进行合并的状态。
+
+```
+Auto-merging test.md
+CONFLICT (content): Merge conflict in test.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
 
 解决办法：手动修改正在合并的文件，留下需要的部分，最后再次添加到暂存区，再次提交（提交时不带文件名）
+
+例如：
+```
+<<<<<<< HEAD (当前更改) --- 可以把不用的信息删掉
+我是 list
+=======
+我是 set
+>>>>>>> set (传入的更改)
+```
 
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>团队协作</font></p>
 
