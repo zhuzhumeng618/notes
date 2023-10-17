@@ -329,7 +329,7 @@ git merge 分支名
 
 会出现：(master|otherBranch) 分支正在进行合并的状态。
 
-解决办法：手动修改文件，再次添加到暂存区，再次提交（提交时不带文件名）
+解决办法：手动修改正在合并的文件，留下需要的部分，最后再次添加到暂存区，再次提交（提交时不带文件名）
 
 # <p style ='background-color:#894e54;text-align:center;'><font color='white'>团队协作</font></p>
 
